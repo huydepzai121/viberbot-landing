@@ -1,0 +1,77 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><link rel="stylesheet" href="shared.css"/>
+<style>
+.tag{display:inline-flex;gap:6px;align-items:center;padding:3px 8px;border-radius:999px;background:rgba(46,204,113,.12);color:#8dffc0;font-size:11px;font-weight:600;margin-bottom:8px}
+.codechip{font-family:var(--mono);font-size:11.5px;background:rgba(0,0,0,.35);border:1px solid var(--line);padding:8px 10px;border-radius:10px;margin-top:8px;color:#cfe0ff;white-space:pre}
+</style></head><body>
+<div class="app" id="capture">
+  <aside class="sidebar">
+    <div class="nav-item active"><span class="ico">✎</span>Chat</div>
+    <div class="nav-item"><span class="ico">▣</span>Library</div>
+    <div class="nav-item"><span class="ico">⏱</span>Automations</div>
+    <div class="section-label">Bots</div>
+    <div class="bot"><div class="av">VN</div>Primary Bot</div>
+    <div class="section-label">Chats</div>
+    <div class="chat-item active">Landing page Cafe Hà Nội</div>
+    <div class="chat-item">Tóm tắt email tuần này</div>
+    <div class="chat-item">Lịch họp tháng 11</div>
+    <div class="chat-item">Content marketing Q4</div>
+    <div class="section-label">Projects</div>
+    <div class="chat-item">+ Add project</div>
+    <div class="spacer"></div>
+    <div class="nav-item"><span class="ico">▦</span>Plugins</div>
+    <div class="foot"><span class="dot"></span>box</div>
+  </aside>
+  <section class="main">
+    <div class="topbar"><span>Chat · Landing page Cafe Hà Nội</span><span class="pill">Opus 5</span></div>
+    <div class="content">
+      <div class="chat-col">
+        <div class="msgs">
+          <div class="msg user"><div class="bubble"><div class="meta">Bạn</div>Làm giúp mình một landing page nhỏ cho quán cafe ở Hà Nội: hero, 3 món nổi bật, nút đặt bàn. Phong cách tối giản, chữ tiếng Việt.</div></div>
+          <div class="msg bot"><div class="bubble">
+            <div class="meta">ViberVN Bot</div>
+            <div class="tag">● Đang dựng preview localhost:5173</div>
+            Mình đã tạo layout React + CSS: hero gradient, lưới 3 món, CTA “Đặt bàn”. Bạn xem panel bên phải — chỉnh màu hoặc copy là mình cập nhật ngay.
+            <div class="codechip">hero → “Cafe Phố Cổ”
+cards → Cà phê trứng · Matcha · Bánh mì pate
+cta → Đặt bàn tối nay</div>
+            <div class="thumb-row">
+              <div class="thumb"><div class="bar"></div><div class="body"><div class="l" style="width:80%"></div><div class="l" style="width:55%"></div><div class="l" style="width:70%"></div></div></div>
+              <div class="thumb"><div class="bar" style="background:linear-gradient(90deg,#ff9f43,#ff6b9d)"></div><div class="body"><div class="l" style="width:65%"></div><div class="l" style="width:75%"></div><div class="l" style="width:40%"></div></div></div>
+            </div>
+          </div></div>
+          <div class="msg user"><div class="bubble"><div class="meta">Bạn</div>Được rồi — đổi CTA thành “Giữ chỗ trên Zalo” và thêm dòng địa chỉ phố Hàng Bạc.</div></div>
+        </div>
+        <div class="composer"><div class="composer-box">
+          <span style="color:var(--muted)">＋</span>
+          <input value="Ask anything" readonly/>
+          <span class="model">Opus 5 ▾</span>
+          <button class="send"></button>
+        </div></div>
+      </div>
+      <aside class="preview">
+        <div class="browser">
+          <div class="url"><div class="traffic"><i></i><i></i><i></i></div><div class="urlbar">http://localhost:5173/</div></div>
+          <div class="site">
+            <div class="site-nav"><div class="site-brand">Cafe Phố Cổ</div><div class="site-links"><span>Thực đơn</span><span>Không gian</span><span>Liên hệ</span></div></div>
+            <div class="hero-card">
+              <h3>Thơm từng tách,<br/>chậm giữa phố cổ</h3>
+              <p>Hàng Bạc, Hoàn Kiếm · Mở cửa 7:00–22:00<br/>Giữ chỗ nhanh qua Zalo — bàn góc cửa sổ còn trống tối nay.</p>
+              <span class="btn">Giữ chỗ trên Zalo</span>
+            </div>
+            <div class="cards">
+              <div class="scard"><b>Cà phê trứng</b><span>Béo mịn, đậm vị Hà Nội.</span></div>
+              <div class="scard"><b>Matcha latte</b><span>Ít ngọt, topping kem tươi.</span></div>
+              <div class="scard"><b>Bánh mì pate</b><span>Nóng giòn mỗi khung giờ.</span></div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;align-items:center;color:#667085;font-size:11px">
+              <span style="padding:4px 8px;border:1px solid #e5e7eb;border-radius:999px;background:#fff">★ 4.9 · 128 đánh giá</span>
+              <span>Hàng Bạc 48 · Hoàn Kiếm</span>
+            </div>
+          </div>
+        </div>
+        <div class="status"><span>You have control — the agent waits</span><span class="hand">Hand back</span></div>
+      </aside>
+    </div>
+  </section>
+</div>
+</body></html>

@@ -1,0 +1,3 @@
+Tôi là trợ lý Claude trên ViberVN Bot.
+
+session_id: local-e072e45b24571b263d743d8994b72cc82124c9de21dfb0ada6f9222cda6a34a0

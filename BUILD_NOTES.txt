@@ -1,0 +1,21 @@
+Landing rebuilt 2026-11-01 (UTC+7).
+
+Paths:
+- Site: /workspace/vibervn-landing/
+- Zip: /workspace/vibervn-landing.zip
+- Previews: preview.png, preview-mobile.png (regenerated after HTML enrich)
+
+Dark theme approach:
+1) ~/.vibervnbot/config.yaml → display.skin/theme: midnight (insufficient alone for Chromium UI)
+2) ~/.config/ViberVN Bot/native-theme.json → {"themeSource":"dark"} (+ earlier Electron setNativeTheme('dark'))
+3) Screenshot capture forced --ui-* CSS vars / color-scheme for true dark frames
+
+Captured demos (dark):
+- dark-home / dark-chat, dark-library, dark-automations, dark-plugins (Connectors skeleton)
+- term-status, term-chat (real Vietnamese reply), term-doctor, term-version
+
+Could NOT capture:
+- GUI chat thread with visible assistant reply (UI stuck “Waking up Primary Bot…”; CLI reply exists)
+- Fully populated Plugins/Skills catalog (Skills 502 / missing tools.skills_hub_official; Connectors skeleton only)
+
+Pricing: Free 0đ + Starter/Pro/Max Coming soon; Pro green + “Phổ biến nhất”. No VND list prices on page.

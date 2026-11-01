@@ -1,0 +1,41 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><link rel="stylesheet" href="shared.css"/>
+<style>
+.page{padding:22px 26px;flex:1}
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tab{padding:7px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:600}
+.tab.on{background:rgba(46,204,113,.12);border-color:rgba(46,204,113,.35);color:#b8f5d0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);min-height:132px;display:flex;flex-direction:column;gap:8px}
+.card .icon{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:13px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.card b{font-size:14px}
+.card p{color:var(--muted);font-size:12.5px;line-height:1.45;flex:1}
+.card .st{font-size:11px;color:#8dffc0;font-weight:600}
+.card .st.off{color:var(--faint)}
+</style></head><body>
+<div class="app" id="capture">
+  <aside class="sidebar">
+    <div class="nav-item"><span class="ico">✎</span>Chat</div>
+    <div class="nav-item"><span class="ico">▣</span>Library</div>
+    <div class="nav-item"><span class="ico">⏱</span>Automations</div>
+    <div class="section-label">Bots</div>
+    <div class="bot"><div class="av">VN</div>Primary Bot</div>
+    <div class="spacer"></div>
+    <div class="nav-item active"><span class="ico">▦</span>Plugins</div>
+    <div class="foot"><span class="dot"></span>box</div>
+  </aside>
+  <section class="main">
+    <div class="topbar"><span>Plugins</span><span class="pill">Catalog · get.viber.vn</span></div>
+    <div class="page">
+      <div class="tabs"><div class="tab on">Connectors</div><div class="tab">Skills</div><div class="tab">Messaging</div><div class="tab">Extensions</div></div>
+      <div class="grid">
+        <div class="card"><div class="icon" style="background:rgba(91,140,255,.15);color:#9ec1ff">Tg</div><b>Telegram</b><p>Gateway polling · gửi/nhận tin, ảnh, lệnh slash.</p><div class="st">● Connected</div></div>
+        <div class="card"><div class="icon" style="background:rgba(46,204,113,.15);color:#8dffc0">Gm</div><b>Gmail</b><p>Đọc hộp thư, tóm tắt, soạn draft tiếng Việt.</p><div class="st">● Connected</div></div>
+        <div class="card"><div class="icon" style="background:rgba(255,159,67,.15);color:#ffd19a">Dr</div><b>Google Drive</b><p>Lưu artifact, backup Library theo lịch.</p><div class="st">● Connected</div></div>
+        <div class="card"><div class="icon" style="background:rgba(139,123,255,.15);color:#cfc7ff">Sl</div><b>Slack</b><p>Bot trong workspace · mention để gọi agent.</p><div class="st off">○ Available</div></div>
+        <div class="card"><div class="icon" style="background:rgba(255,107,157,.15);color:#ffc1d6">No</div><b>Notion</b><p>Đọc brief, ghi kết quả automation vào database.</p><div class="st off">○ Available</div></div>
+        <div class="card"><div class="icon" style="background:rgba(91,140,255,.12);color:#9ec1ff">Gh</div><b>GitHub</b><p>Issue, PR summary, mở draft từ chat.</p><div class="st off">○ Available</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+</body></html>

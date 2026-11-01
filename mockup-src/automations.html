@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><link rel="stylesheet" href="shared.css"/>
+<style>
+.page{padding:22px 26px;flex:1;overflow:hidden}
+.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.head h1{font-size:22px;letter-spacing:-.03em}
+.btn{background:var(--green);color:#04110a;border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px}
+.list{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.row b{display:block;font-size:14px;margin-bottom:3px}
+.row span{color:var(--muted);font-size:12.5px}
+.badge{font-size:11px;padding:4px 9px;border-radius:999px;border:1px solid rgba(46,204,113,.3);background:rgba(46,204,113,.1);color:#8dffc0;font-weight:600}
+.badge.off{border-color:var(--line);background:rgba(255,255,255,.03);color:var(--muted)}
+.sched{color:var(--faint);font-size:12px;font-family:var(--mono)}
+</style></head><body>
+<div class="app" id="capture">
+  <aside class="sidebar">
+    <div class="nav-item"><span class="ico">✎</span>Chat</div>
+    <div class="nav-item"><span class="ico">▣</span>Library</div>
+    <div class="nav-item active"><span class="ico">⏱</span>Automations</div>
+    <div class="section-label">Bots</div>
+    <div class="bot"><div class="av">VN</div>Primary Bot</div>
+    <div class="section-label">Chats</div>
+    <div class="chat-item">Landing page Cafe Hà Nội</div>
+    <div class="chat-item">Tóm tắt email tuần này</div>
+    <div class="spacer"></div>
+    <div class="nav-item"><span class="ico">▦</span>Plugins</div>
+    <div class="foot"><span class="dot"></span>box</div>
+  </aside>
+  <section class="main">
+    <div class="topbar"><span>Automations</span><span class="pill">Gateway · running</span></div>
+    <div class="page">
+      <div class="head"><h1>Automations</h1><button class="btn">+ New Automation</button></div>
+      <div class="list">
+        <div class="row"><div><b>Báo cáo doanh thu mỗi sáng</b><span>Thu thập sheet + gửi tóm tắt tiếng Việt qua Telegram</span></div><div class="sched">0 8 * * *</div><div class="badge">Active</div></div>
+        <div class="row"><div><b>Tóm tắt email chưa đọc</b><span>Gmail · ưu tiên khách hàng · 09:00 &amp; 17:00</span></div><div class="sched">0 9,17 * * 1-5</div><div class="badge">Active</div></div>
+        <div class="row"><div><b>Nhắc lịch họp ngày mai</b><span>Calendar → tin nhắn Zalo/Telegram lúc 20:00</span></div><div class="sched">0 20 * * *</div><div class="badge">Active</div></div>
+        <div class="row"><div><b>Draft content marketing thứ 2</b><span>3 caption IG + 1 thread X từ brief Notion</span></div><div class="sched">0 10 * * 1</div><div class="badge off">Paused</div></div>
+        <div class="row"><div><b>Backup ghi chú tuần</b><span>Library → Drive folder “Tuần {iso}”</span></div><div class="sched">0 21 * * 0</div><div class="badge">Active</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+</body></html>

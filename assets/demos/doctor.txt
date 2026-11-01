@@ -1,0 +1,95 @@
+
+┌─────────────────────────────────────────────────────────┐
+│                 🩺 ViberVN Bot Doctor                        │
+└─────────────────────────────────────────────────────────┘
+
+◆ Security Advisories
+  ✓ No active security advisories
+
+◆ MCP Server Security
+  ✓ No suspicious MCP stdio commands
+
+◆ Python Environment
+  ✓ Python 3.14.9
+  ✓ SQLite 3.53.1
+    → SQLite source id: 2026-05-05 10:34:17 c88b22011a54b4f6fbd149e9f8e4…
+    → state.db: WAL journal mode (540.0 KB)
+    → cron/executions.db: WAL journal mode (24.0 KB)
+    → projects.db: WAL journal mode (44.0 KB)
+    → kanban.db: WAL journal mode (116.0 KB)
+  ✓ Runtime venv staged (/tmp/.mount_VibervppffFB/resources/agent-payload/venv) (active in this process)
+
+◆ SSL / CA Certificates
+  ✓ TLS platform trust store configured; default SSL context available
+
+◆ Required Packages
+  ✓ OpenAI SDK
+  ✓ Rich (terminal UI)
+  ✓ python-dotenv
+  ✓ ruamel.yaml
+  ✓ HTTPX
+  ✓ Croniter (cron expressions) (optional)
+  ✓ python-telegram-bot (optional)
+  ✓ discord.py (optional)
+  ✓ Dashboard web surface (imports cleanly)
+
+◆ Configuration Files
+  ✓ ~/.vibervnbot/.env file exists
+  ✓ API key or custom endpoint configured
+  ✓ ~/.vibervnbot/config.yaml exists
+  ✓ Config version up to date (v52)
+  ✓ No deprecated config keys or env vars
+
+◆ xAI Model Retirement (May 15, 2026)
+  ✓ No retired xAI models in config
+
+◆ Session Reset (timers removed Sep 7, 2026)
+  ✓ No idle/daily session_reset policy configured
+
+◆ Auth Providers
+  ⚠ OpenAI Codex auth (not logged in)
+    → No Codex credentials stored. Run `vibervnbot auth add openai-codex --type oauth` to authenticate.
+    → codex CLI not installed (optional — only required to import tokens from an existing Codex CLI login)
+  ⚠ MiniMax OAuth (not logged in)
+  ⚠ xAI OAuth (not logged in)
+    → No xAI OAuth credentials stored. Select xAI Grok OAuth (SuperGrok / Premium+) in `vibervnbot model`.
+
+◆ Directory Structure
+  ✓ ~/.vibervnbot directory exists
+  ✓ ~/.vibervnbot/cron/ exists
+  ✓ ~/.vibervnbot/sessions/ exists
+  ✓ ~/.vibervnbot/logs/ exists
+  ✓ ~/.vibervnbot/skills/ exists
+  ✓ ~/.vibervnbot/memories/ exists
+  ✓ ~/.vibervnbot/cache/scratch/ is the scratch dir (TMPDIR; 0 B, entries pruned after 24h idle)
+  ✓ ~/.vibervnbot/SOUL.md exists (persona configured)
+  ✓ ~/.vibervnbot/memories/ directory exists
+    → MEMORY.md not created yet (will be created when the agent first writes a memory)
+    → USER.md not created yet (will be created when the agent first writes a memory)
+  ✓ ~/.vibervnbot/state.db exists (2 sessions)
+    → state.db logical size 540.0 KB, 135 pages, 0 free, WAL 627.7 KB
+    → 2 messages, 2 sessions, journal_mode=wal, 1 process(es) holding the DB open (the host gateway (PID 594066) serving profiles default)
+    → FTS tables: messages_fts, messages_fts_trigram
+  ✓ ~/.vibervnbot/cron/ store is writable
+
+◆ Command Installation
+  ✓ ViberVN Bot entry point exists (/tmp/.mount_VibervppffFB/resources/agent-payload/vibervnbot-agent/vibervnbot)
+  ⚠ ~/.local/bin/vibervnbot points to wrong target (→ /tmp/.mount_VibervppffFB/resources/agent-payload/bin/vibervnbot, expected → /tmp/.mount_VibervppffFB/resources/agent-payload/vibervnbot-agent/vibervnbot)
+
+◆ External Tools
+  ✓ git
+  ✓ ripgrep (rg) (pm store) (faster file search)
+  ✓ Docker (optional)
+  ✓ Node.js
+  ✓ Chromium (/tmp/.mount_VibervppffFB/resources/agent-payload/tools/chromium-1208/chrome-linux64/chrome)
+
+◆ API Connectivity
+  Running 44 connectivity checks in parallel…                                                                        ⚠ OpenRouter API (not configured)
+  ✓ Hugging Face        
+
+◆ Tool Availability
+  ✓ browser
+  ✓ browser-use
+  ✓ catalog
+  ✓ clarify
+  ✓ code_executio

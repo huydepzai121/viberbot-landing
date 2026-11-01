@@ -1,0 +1,14 @@
+
+┌─────────────────────────────────────────────────────────┐
+│                 ☤ ViberVN Bot Status                  │
+└─────────────────────────────────────────────────────────┘
+
+  Model:        claude-opus-5
+  Provider:     custom
+  Providers:    Hugging Face, OpenAI API, bedrock-viber
+  Gateway:      ✓ running
+  Platforms:    Telegram
+  Jobs:         0
+
+  Run 'vibervnbot status --full' for every section
+

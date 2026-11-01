@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ViberVN Bot — Trợ lý AI cá nhân chạy trên máy của bạn: desktop, terminal và các nền tảng nhắn tin. Tải tại get.viber.vn." />
+  <title>ViberVN Bot — Trợ lý AI trên máy của bạn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="#top"><span class="mark">VN</span><span>ViberVN Bot</span></a>
+        <nav class="nav-links" aria-label="Điều hướng">
+          <a href="#whats-new">Mới</a>
+          <a href="#features">Tính năng</a>
+          <a href="#showcase">Demo</a>
+          <a href="#download">Tải về</a>
+          <a href="#install">Cài đặt</a>
+          <a href="#pricing">Bảng giá</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="btn btn-primary btn-sm" href="#download">Tải v0.3.0</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="eyebrow">v0.3.0 · Desktop · Terminal · Nhắn tin</div>
+            <h1>Trợ lý AI cá nhân<br /><em>chạy trên máy của bạn</em></h1>
+            <p class="lead">Desktop, terminal và các nền tảng nhắn tin — đúng như <a href="https://get.viber.vn">get.viber.vn</a>. Tự host, tự chọn model, cập nhật bằng cách cài đè bản mới.</p>
+            <div class="cta-row">
+              <a class="btn btn-green" href="#download">Tải bộ cài</a>
+              <a class="btn btn-ghost" href="https://github.com/nullmastermind/vibervn-bot-releases/releases">Tất cả phiên bản &amp; ghi chú</a>
+            </div>
+            <p class="meta">Nguồn cài đặt chính thức: <a href="https://get.viber.vn">get.viber.vn</a> · Releases: <a href="https://github.com/nullmastermind/vibervn-bot-releases">vibervn-bot-releases</a></p>
+            <div class="logo-strip" aria-label="Tích hợp">
+              <span>Telegram</span><span>Gmail</span><span>Google Drive</span><span>Slack</span><span>Notion</span><span>GitHub</span><span>OpenAI-compatible</span>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="mock-frame"><img src="assets/mockups/mock-chat.png" width="2880" height="1800" alt="ViberVN Bot — chat + browser preview" /></div>
+            <div class="float-card"><img src="assets/mockups/mock-telegram.png" alt="Telegram với ViberVN Bot" /></div>
+            <div class="float-term"><img src="assets/mockups/mock-terminal.png" alt="CLI vibervnbot" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="whats-new">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">v0.3.0</div>
+            <h2>Có gì mới</h2>
+            <p>Tóm tắt từ ghi chú phát hành chính thức trên GitHub Releases (đi cùng bản tải tại get.viber.vn).</p>
+          </div>
+          <div class="whatsnew">
+            <article class="tile glass">
+              <h3>Dạy một việc (Teach a task)</h3>
+              <p>Trong Show computer, thêm ghi chú tùy chọn rồi Start: bạn điều khiển trình duyệt trong khung đỏ; mọi click, gõ phím và đổi trang được ghi kèm ảnh. Mật khẩu / OTP / thẻ được ghi ở dạng ẩn. Khi Stop, agent biến bản ghi thành skill đã lưu và báo tên skill.</p>
+            </article>
+            <article class="tile glass">
+              <h3>Bằng chứng làm việc trên trình duyệt</h3>
+              <p>Khi agent dùng trình duyệt trong một câu trả lời, ảnh chụp tab hiện dưới tin nhắn — bấm để phóng to, hoặc mở Show computer từ liên kết.</p>
+            </article>
+            <article class="tile glass">
+              <h3>Trình duyệt giữ đăng nhập</h3>
+              <p>Mỗi bot có một hồ sơ trình duyệt bền; trình duyệt local còn mở khoảng 30 phút idle — đăng nhập và trang đang mở được giữ giữa các việc. Agent có thể đóng đúng trình duyệt nó mở (không tắt nhầm desktop app).</p>
+            </article>
+          </div>
+          <div class="docs-links">
+            <a href="https://get.viber.vn">get.viber.vn — trang cài đặt</a>
+            <a href="https://github.com/nullmastermind/vibervn-bot-releases/releases/tag/v0.3.0">Ghi chú v0.3.0</a>
+            <a href="https://github.com/nullmastermind/vibervn-bot-releases/releases">Mọi phiên bản</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="features">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">Workspace</div>
+            <h2>Một app. Nhiều bề mặt.</h2>
+            <p>Desktop đẹp như Linear, sức mạnh CLI, nhắn tin luôn bật qua gateway — chạy trên máy bạn.</p>
+          </div>
+          <div class="bento">
+            <article class="tile glass wide">
+              <h3>Chat + live preview</h3>
+              <p>Giao việc bằng tiếng Việt — bot dựng trang, gửi báo cáo, soạn content. Panel preview hiện ngay bên phải.</p>
+              <div class="shot"><img src="assets/mockups/mock-chat.png" alt="Chat mockup" /></div>
+            </article>
+            <article class="tile glass">
+              <h3>Automations</h3>
+              <p>Cron thật: báo cáo sáng, tóm tắt email, nhắc lịch.</p>
+              <div class="shot"><img src="assets/mockups/mock-automations.png" alt="Automations mockup" /></div>
+            </article>
+            <article class="tile glass">
+              <h3>Plugins</h3>
+              <p>Connectors cho Telegram, Gmail, Drive, Slack…</p>
+              <div class="shot"><img src="assets/mockups/mock-plugins.png" alt="Plugins mockup" /></div>
+            </article>
+            <article class="tile glass">
+              <h3>Telegram</h3>
+              <p>Nhắn bot khi laptop đóng — gateway polling.</p>
+              <div class="shot"><img src="assets/mockups/mock-telegram.png" alt="Telegram mockup" /></div>
+            </article>
+            <article class="tile glass">
+              <h3>CLI</h3>
+              <p><code>status</code>, <code>chat</code>, <code>doctor</code>, <code>gateway</code> — cùng config với desktop.</p>
+              <div class="shot"><img src="assets/mockups/mock-terminal.png" alt="Terminal mockup" /></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="showcase" class="band">
+        <div class="container showcase">
+          <div class="section-head">
+            <div class="kicker">Demo</div>
+            <h2>Giao diện được thiết kế lại</h2>
+            <p>Mockup dark mode — mô phỏng workflow thật bằng tiếng Việt.</p>
+          </div>
+          <div class="alt">
+            <div class="copy">
+              <span class="pill">Desktop</span>
+              <h3>Từ ý tưởng đến preview trong một cửa sổ</h3>
+              <p>Sidebar Chat · Library · Automations · Plugins. Bot viết landing cafe, bạn chỉnh CTA — panel localhost cập nhật ngay.</p>
+            </div>
+            <div class="frame"><img src="assets/mockups/mock-chat.png" alt="Chat + preview" /></div>
+          </div>
+          <div class="alt reverse">
+            <div class="frame"><img src="assets/mockups/mock-automations.png" alt="Automations" /></div>
+            <div class="copy">
+              <span class="pill">Automations</span>
+              <h3>Việc lặp lại chạy đúng giờ</h3>
+              <p>Báo cáo doanh thu 8:00, tóm tắt Gmail giờ hành chính, nhắc họp tối — Active / Paused rõ ràng.</p>
+            </div>
+          </div>
+          <div class="alt">
+            <div class="copy">
+              <span class="pill">Messaging</span>
+              <h3>Telegram trong túi bạn</h3>
+              <p>Hỏi lịch, nhờ draft caption, gửi vào nhóm marketing — không cần mở desktop.</p>
+            </div>
+            <div class="frame" style="max-width:360px;margin-inline:auto"><img src="assets/mockups/mock-telegram.png" alt="Telegram phone" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="download">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">Tải về</div>
+            <h2>Tải từ get.viber.vn</h2>
+            <p>Liên kết ổn định trên trang cài đặt chính thức — hiện trỏ tới <strong>v0.3.0</strong>. Mọi phiên bản &amp; ghi chú tại GitHub Releases.</p>
+          </div>
+          <div class="platforms">
+            <article class="platform glass">
+              <h3>Windows 11 (x64)</h3>
+              <p class="note">22H2+ · cần thêm chứng chỉ bên dưới</p>
+              <div class="dl">
+                <a href="https://get.viber.vn/download/windows"><span>.msix</span><span class="badge">win-x64</span></a>
+                <a href="https://get.viber.vn/download/windows-cert"><span>ViberVN-signing.cer</span><span class="badge">cert</span></a>
+              </div>
+            </article>
+            <article class="platform glass">
+              <h3>macOS 13+</h3>
+              <p class="note">Apple Silicon (M1+) hoặc Intel</p>
+              <div class="dl">
+                <a href="https://get.viber.vn/download/mac-arm64"><span>.dmg Apple Silicon</span><span class="badge">arm64</span></a>
+                <a href="https://get.viber.vn/download/mac-x64"><span>.dmg Intel</span><span class="badge">x64</span></a>
+              </div>
+            </article>
+            <article class="platform glass">
+              <h3>Linux</h3>
+              <p class="note"><code>chmod +x</code> AppImage rồi chạy</p>
+              <div class="dl">
+                <a href="https://get.viber.vn/download/linux-x64"><span>.AppImage</span><span class="badge">x86_64</span></a>
+                <a href="https://get.viber.vn/download/linux-arm64"><span>.AppImage</span><span class="badge">arm64</span></a>
+              </div>
+            </article>
+          </div>
+          <div class="docs-links">
+            <a href="https://get.viber.vn">Mở get.viber.vn</a>
+            <a href="https://github.com/nullmastermind/vibervn-bot-releases/releases">Tất cả phiên bản và ghi chú phát hành</a>
+          </div>
+          <p class="warn">Bộ cài chưa được ký bởi nhà phát hành tin cậy; mỗi hệ điều hành sẽ cảnh báo một lần (theo get.viber.vn).</p>
+        </div>
+      </section>
+
+      <section id="install">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">Cài đặt</div>
+            <h2>Hướng dẫn theo hệ điều hành</h2>
+            <p>Nội dung lấy từ <a href="https://get.viber.vn">get.viber.vn</a> — giữ nguyên các lệnh PowerShell / shell chính thức.</p>
+          </div>
+          <div class="install-grid">
+            <article class="install-card glass">
+              <h3>Windows 11 22H2+</h3>
+              <p>Tải chứng chỉ và file <code>.msix</code>. Tin cậy chứng chỉ <strong>một lần</strong> trong PowerShell chạy bằng quyền Administrator:</p>
+              <div class="code-block">Import-Certificate -FilePath .\ViberVN-signing.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople</div>
+              <p style="margin-top:.7rem">Rồi mở file <code>.msix</code> và chọn Install.</p>
+            </article>
+            <article class="install-card glass">
+              <h3>macOS 13+</h3>
+              <p>Mở <code>.dmg</code> và kéo ứng dụng vào Applications. Lần đầu macOS sẽ chặn: System Settings → Privacy &amp; Security → Open Anyway, hoặc:</p>
+              <div class="code-block">xattr -dr com.apple.quarantine "/Applications/ViberVN Bot.app"</div>
+              <p style="margin-top:.7rem">Nếu vẫn báo ứng dụng bị hỏng, tự ký một lần:</p>
+              <div class="code-block">codesign --force --deep --sign - "/Applications/ViberVN Bot.app"</div>
+            </article>
+            <article class="install-card glass">
+              <h3>Linux</h3>
+              <p><code>chmod +x</code> file <code>.AppImage</code> đúng kiến trúc rồi chạy nó.</p>
+              <div class="code-block">chmod +x VibervnbotBundled-*-linux-x86_64.AppImage
+./VibervnbotBundled-*-linux-x86_64.AppImage</div>
+            </article>
+          </div>
+          <div class="update-box glass">
+            <h3 style="margin-bottom:.45rem">Cập nhật và cài lại</h3>
+            <p>Tải bản mới ở trên và <strong>cài đè</strong> lên bản cũ; dữ liệu và cấu hình của bạn được giữ nguyên. Nếu ứng dụng báo thiếu hoặc hỏng runtime, cài lại từ <a href="https://get.viber.vn">get.viber.vn</a>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <div class="container">
+          <div class="section-head center">
+            <div class="kicker">Bảng giá</div>
+            <h2>Free trên máy bạn. Cloud sắp mở.</h2>
+          </div>
+          <p class="pricing-intro">Starter, Pro và Max bổ sung không gian cloud always-on — Coming soon. (Không thay đổi so với bảng giá landing.)</p>
+          <div class="pricing">
+            <article class="price">
+              <div class="row"><span class="chip">Free</span></div>
+              <div class="amount">0đ</div>
+              <p class="desc">Chạy trên máy tính của bạn.</p>
+              <ul class="feats">
+                <li>Không giới hạn số bot trên máy bạn</li>
+                <li>Mọi mô hình AI với key / endpoint của bạn</li>
+                <li>Mac, Windows và Linux</li>
+                <li>Bot hoạt động khi máy đang bật</li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="#download">Tải về miễn phí</a>
+            </article>
+            <article class="price">
+              <div class="row"><span class="chip">Starter</span></div>
+              <div class="amount"><span class="soon">Coming soon</span></div>
+              <p class="desc">Bot vẫn chạy khi laptop tắt — gói cloud khởi đầu.</p>
+              <ul class="feats">
+                <li>Always-on 24/7</li>
+                <li>Máy cloud riêng cho bot</li>
+                <li>Tài nguyên cloud mức cơ bản</li>
+              </ul>
+              <a class="btn btn-ghost btn-block" href="https://get.viber.vn">Coming soon</a>
+            </article>
+            <article class="price featured">
+              <div class="row"><span class="chip">Pro</span><span class="chip pop">Phổ biến nhất</span></div>
+              <div class="amount"><span class="soon">Coming soon</span></div>
+              <p class="desc">Bot 24/7 trên cloud khi laptop đóng.</p>
+              <ul class="feats">
+                <li>Always-on 24/7</li>
+                <li>Máy cloud riêng cho bot</li>
+                <li>Tài nguyên cloud cao hơn Starter</li>
+              </ul>
+              <a class="btn btn-green btn-block" href="https://get.viber.vn">Coming soon</a>
+            </article>
+            <article class="price">
+              <div class="row"><span class="chip">Max</span></div>
+              <div class="amount"><span class="soon">Coming soon</span></div>
+              <p class="desc">Máy cloud lớn nhất trong các gói.</p>
+              <ul class="feats">
+                <li>Always-on 24/7</li>
+                <li>Máy cloud riêng cho bot</li>
+                <li>Tài nguyên cloud cao nhất</li>
+              </ul>
+              <a class="btn btn-ghost btn-block" href="https://get.viber.vn">Coming soon</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="cli">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">CLI</div>
+            <h2>Bắt đầu nhanh trên terminal</h2>
+          </div>
+          <div class="grid-3" style="grid-template-columns:1.2fr .9fr;gap:1rem">
+            <div class="terminal">
+              <div class="tbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <pre><span class="cmt"># Linux AppImage (sau khi tải từ get.viber.vn)</span>
+<span class="cmd">chmod +x VibervnbotBundled-*-linux-x86_64.AppImage</span>
+<span class="cmd">./VibervnbotBundled-*-linux-x86_64.AppImage</span>
+
+<span class="cmt"># Kiểm tra</span>
+<span class="cmd">vibervnbot status</span>
+<span class="cmd">vibervnbot chat -q "Xin chào" --oneshot -Q</span></pre>
+            </div>
+            <div class="frame"><img src="assets/mockups/mock-terminal.png" alt="Styled terminal" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="container">
+          <div class="section-head center"><div class="kicker">FAQ</div><h2>Câu hỏi thường gặp</h2></div>
+          <div class="faq">
+            <details class="glass" open>
+              <summary>App chạy ở đâu?</summary>
+              <p>Trên máy bạn (self-hosted): desktop, terminal và các nền tảng nhắn tin — đúng mô tả tại get.viber.vn. Free yêu cầu máy đang bật. Cloud Coming soon sẽ always-on.</p>
+            </details>
+            <details class="glass">
+              <summary>Vì sao OS cảnh báo khi cài?</summary>
+              <p>Bộ cài chưa được ký bởi nhà phát hành tin cậy; mỗi hệ điều hành cảnh báo một lần. Làm theo hướng dẫn Cài đặt (chứng chỉ Windows / Open Anyway trên macOS / chmod AppImage trên Linux).</p>
+            </details>
+            <details class="glass">
+              <summary>Cài Windows thế nào?</summary>
+              <p>Tải <code>.msix</code> và <code>ViberVN-signing.cer</code> từ get.viber.vn. Trong PowerShell Administrator: <code>Import-Certificate -FilePath .\ViberVN-signing.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople</code>, rồi mở <code>.msix</code> → Install.</p>
+            </details>
+            <details class="glass">
+              <summary>macOS báo hỏng / bị chặn?</summary>
+              <p>Privacy &amp; Security → Open Anyway, hoặc <code>xattr -dr com.apple.quarantine "/Applications/ViberVN Bot.app"</code>. Nếu vẫn hỏng: <code>codesign --force --deep --sign - "/Applications/ViberVN Bot.app"</code>.</p>
+            </details>
+            <details class="glass">
+              <summary>Cập nhật có mất dữ liệu không?</summary>
+              <p>Không. Tải bản mới và cài đè; dữ liệu &amp; cấu hình được giữ. Nếu thiếu/hỏng runtime, cài lại từ get.viber.vn.</p>
+            </details>
+            <details class="glass">
+              <summary>Tôi dùng model nào?</summary>
+              <p>Tự gắn key/endpoint. Provider có sẵn hoặc custom OpenAI-compatible.</p>
+            </details>
+            <details class="glass">
+              <summary>Có Telegram / nhắn tin không?</summary>
+              <p>Có — gateway nhắn tin (Telegram đã dùng phổ biến). CLI còn helper cho nền tảng khác.</p>
+            </details>
+            <details class="glass">
+              <summary>Tài liệu / release notes ở đâu?</summary>
+              <p><a href="https://get.viber.vn">get.viber.vn</a> (cài đặt &amp; tải) · <a href="https://github.com/nullmastermind/vibervn-bot-releases/releases">GitHub Releases</a> (mọi phiên bản &amp; ghi chú, gồm v0.3.0).</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="cta-final">
+            <h2>Sẵn sàng chạy bot trên máy bạn?</h2>
+            <p>Tải bản mới nhất từ get.viber.vn — Free, self-hosted.</p>
+            <a class="btn btn-green" href="https://get.viber.vn">Mở get.viber.vn</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container foot">
+        <div>© ViberVN Bot · Nội dung cài đặt theo <a href="https://get.viber.vn">get.viber.vn</a> · v0.3.0</div>
+        <div class="flinks">
+          <a href="https://get.viber.vn">get.viber.vn</a>
+          <a href="https://github.com/nullmastermind/vibervn-bot-releases/releases">Releases</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+ViberVN Bot v0.2.0 · stable
+Install directory: /tmp/.mount_VibervppffFB/resources/agent-payload/vibervnbot-agent
+Install method: unknown
+Python: 3.14.9
+OpenAI SDK: 2.54.0
