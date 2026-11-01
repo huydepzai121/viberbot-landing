@@ -1,2 +1,16 @@
 server.log
 .DS_Store
+*.zip
+preview.png
+preview-mobile.png
+assets/demos/forced-*
+assets/demos/route_*
+assets/demos/native-*
+assets/demos/01-*
+assets/demos/ui-*
+assets/reference/get-viber-vn-source.html
+.env
+.env.*
+**/.env
+**/*secret*
+**/*credential*
