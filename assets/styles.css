@@ -161,7 +161,7 @@ footer{border-top:1px solid var(--line);padding:2rem 0 2.4rem;color:var(--muted)
 }
 @media (max-width:640px){.pricing,.bento{grid-template-columns:1fr}}
 
-/* get.viber.vn content blocks */
+/* install / docs content blocks */
 .install-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 .install-card{padding:1.25rem 1.3rem}
 .install-card h3{font-size:1.05rem;margin-bottom:.55rem;letter-spacing:-.02em}
