@@ -1,0 +1,43 @@
+---
+title: "Chọn mô hình AI"
+description: "Kết nối nhà cung cấp mô hình AI bằng tài khoản hoặc khóa API của bạn."
+icon: "microchip"
+---
+
+ViberVN Bot không đi kèm mô hình AI riêng. Bạn chọn nhà cung cấp mình muốn và trả phí trực tiếp cho họ (hoặc dùng mô hình miễn phí chạy trên máy).
+
+## Lần đầu mở ứng dụng
+
+Màn hình chào mừng hỏi bạn muốn dùng nhà cung cấp nào. Chọn một nhà cung cấp, đăng nhập hoặc dán khóa API, rồi chọn mô hình. Nếu chưa có sẵn khóa, bạn có thể bỏ qua bước này và thiết lập sau.
+
+{/* IMG:onboarding */}
+
+## Đổi mô hình mặc định
+
+Mở **Cài đặt → Mô hình**, chọn nhà cung cấp và mô hình rồi bấm **Áp dụng**. Mô hình này được dùng cho cuộc trò chuyện mới, việc chạy theo lịch và các bot phụ.
+
+{/* IMG:settings-model */}
+
+## Đổi mô hình cho một cuộc trò chuyện
+
+Bấm vào tên mô hình trong ô nhắn tin (bên trái nút micro) để chọn mô hình khác chỉ cho cuộc trò chuyện đang mở. Bấm ngôi sao cạnh một mô hình để đưa nó lên mục **Yêu thích**.
+
+<Tip>
+Đổi mô hình giữa một cuộc trò chuyện dài làm lần trả lời tiếp theo tốn phí hơn, vì mô hình mới phải đọc lại toàn bộ hội thoại. Với việc mới, mở cuộc trò chuyện mới sẽ tiết kiệm hơn.
+</Tip>
+
+## Các nhà cung cấp phổ biến
+
+| Nhà cung cấp | Cách kết nối | Ghi chú |
+|---|---|---|
+| OpenAI | Khóa API | Lấy khóa ở trang quản lý API của OpenAI |
+| Anthropic | Khóa API | Lấy khóa ở Anthropic Console |
+| Google Gemini | Khóa API | Lấy khóa ở Google AI Studio |
+| OpenRouter | Khóa API | Một khóa dùng được nhiều mô hình của nhiều hãng |
+| xAI Grok | Đăng nhập tài khoản | Đăng nhập qua trình duyệt |
+| Ollama | Chạy trên máy | Miễn phí, dữ liệu không rời khỏi máy, cần máy đủ mạnh |
+| Endpoint tuỳ chỉnh | Địa chỉ + khóa | Bất kỳ dịch vụ nào tương thích OpenAI hoặc Anthropic |
+
+<Note>
+Khóa API được lưu trên máy của bạn. Đừng chia sẻ khóa cho người khác. Nếu nghi ngờ khóa bị lộ, hãy thu hồi nó ở trang của nhà cung cấp và tạo khóa mới.
+</Note>

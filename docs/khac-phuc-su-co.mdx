@@ -1,0 +1,63 @@
+---
+title: "Khắc phục sự cố"
+description: "Cách xử lý các lỗi hay gặp khi cài và dùng ViberVN Bot."
+icon: "wrench"
+---
+
+<AccordionGroup>
+  <Accordion title="Windows báo không cài được file .msix">
+    Bạn chưa tin cậy chứng chỉ. Mở PowerShell bằng quyền Administrator trong thư mục chứa file và chạy:
+
+    ```powershell
+    Import-Certificate -FilePath .\ViberVN-signing.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+    ```
+
+    Sau đó mở lại file `.msix`.
+  </Accordion>
+  <Accordion title="Phần mềm diệt virus chặn file uv.exe">
+    Đây là báo nhầm. `uv.exe` là công cụ quản lý môi trường Python mà ứng dụng dùng. Thêm thư mục ứng dụng vào danh sách loại trừ của phần mềm diệt virus (loại trừ **thư mục**, không phải từng file, vì file thay đổi mỗi lần cập nhật).
+  </Accordion>
+  <Accordion title="macOS báo ứng dụng bị hỏng hoặc không mở được">
+    Vào **System Settings → Privacy & Security → Open Anyway**. Nếu vẫn lỗi, mở Terminal và chạy:
+
+    ```bash
+    xattr -dr com.apple.quarantine "/Applications/ViberVN Bot.app"
+    codesign --force --deep --sign - "/Applications/ViberVN Bot.app"
+    ```
+  </Accordion>
+  <Accordion title="Bot không trả lời, báo lỗi mô hình">
+    Kiểm tra khóa API ở **Cài đặt → Nhà cung cấp**: khóa còn hạn, tài khoản còn tiền, đúng mô hình. Thử đổi sang mô hình khác trong ô nhắn tin để xem lỗi ở nhà cung cấp hay ở máy.
+  </Accordion>
+  <Accordion title="Ứng dụng báo mất kết nối, hiện nút Kết nối lại">
+    Bấm **Kết nối lại**. Nếu không được, thoát hẳn ứng dụng và mở lại.
+  </Accordion>
+  <Accordion title="Telegram không nhận tin nhắn">
+    1. Ứng dụng trên máy tính phải đang chạy.
+    2. Kiểm tra ID của bạn có trong **Người dùng được phép**.
+    3. Sau khi đổi cài đặt, bấm **Khởi động lại ngay** trên trang Nhắn tin.
+    4. Chạy `vibervnbot gateway restart` nếu vẫn không được.
+  </Accordion>
+  <Accordion title="Tự động hóa không chạy đúng giờ">
+    Máy tính phải bật và không ngủ vào giờ chạy. Bật **Cài đặt → Nâng cao → Giữ máy tính thức**. Xem tab **Lượt chạy** trong Tự động hóa để biết lần chạy gần nhất bị lỗi gì. Nếu bạn đặt giờ yên tĩnh, việc trong khoảng đó sẽ chạy khi hết giờ.
+  </Accordion>
+  <Accordion title="Bị chặn bởi trang web khi bot dùng trình duyệt">
+    Một số trang chặn trình duyệt tự động. Mở **Xem máy tính**, bấm **Nhấp để điều khiển** để tự vượt bước kiểm tra, rồi **Trả quyền điều khiển** cho bot.
+  </Accordion>
+</AccordionGroup>
+
+## Dữ liệu được lưu ở đâu?
+
+| Hệ điều hành | Thư mục |
+|---|---|
+| Windows | `%LOCALAPPDATA%\vibervnbot` |
+| macOS, Linux | `~/.vibervnbot` |
+
+Sao lưu thư mục này để giữ toàn bộ cài đặt, trí nhớ và lịch sử trò chuyện.
+
+## Tự kiểm tra
+
+```bash
+vibervnbot doctor
+```
+
+Lệnh này kiểm tra cấu hình, kết nối mô hình và các thành phần đi kèm, rồi chỉ ra cách sửa.

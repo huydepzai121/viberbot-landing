@@ -1,0 +1,37 @@
+---
+title: "Liên kết thiết bị"
+description: "Giao việc cho một máy tính khác, kể cả máy ở nhà sau router, mà không cần mở cổng mạng."
+icon: "link"
+---
+
+Liên kết thiết bị cho phép một máy trung tâm (ví dụ máy chủ VPS của bạn) giao việc cho máy khác ở nhà hay văn phòng. Máy ở nhà tự kết nối ra ngoài tới máy trung tâm, nên không cần mở cổng router hay cài đường hầm.
+
+<Note>
+Tính năng này dành cho người dùng có từ hai máy trở lên và thao tác bằng [dòng lệnh](/dong-lenh).
+</Note>
+
+<Steps>
+  <Step title="Tạo mã ghép nối trên máy trung tâm">
+    ```bash
+    vibervnbot peer pair-code may-nha
+    ```
+    Lệnh in ra một mã dùng một lần, hết hạn sau 10 phút.
+  </Step>
+  <Step title="Liên kết từ máy ở nhà">
+    ```bash
+    vibervnbot peer link --hub https://dia-chi-may-trung-tam:8642 --name may-nha --code ABCD-2345
+    vibervnbot gateway restart
+    ```
+  </Step>
+  <Step title="Kiểm tra và giao việc">
+    Trên máy trung tâm:
+    ```bash
+    vibervnbot peer devices
+    vibervnbot peer run may-nha "dọn thư mục Downloads"
+    ```
+  </Step>
+</Steps>
+
+- Việc gửi tới máy đang tắt được giữ lại và chạy khi máy kết nối lại.
+- Máy ở nhà vẫn áp dụng quy tắc phê duyệt và giới hạn chi phí của chính nó.
+- Cắt liên kết bất cứ lúc nào: `vibervnbot peer revoke may-nha`.

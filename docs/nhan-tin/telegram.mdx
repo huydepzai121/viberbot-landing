@@ -1,0 +1,52 @@
+---
+title: "Telegram"
+description: "Kết nối bot với Telegram để giao việc từ điện thoại."
+icon: "telegram"
+---
+
+## Cách nhanh: tạo bot bằng mã QR
+
+<Steps>
+  <Step title="Mở trang Telegram">
+    Vào **Plugin → Nhắn tin → Telegram**.
+  </Step>
+  <Step title="Chọn Thiết lập nhanh">
+    Bấm **Tạo bằng mã QR**.
+
+    {/* IMG:telegram */}
+  </Step>
+  <Step title="Quét mã bằng Telegram">
+    Quét mã bằng ứng dụng Telegram trên điện thoại (hoặc bấm **Mở Telegram** nếu đang dùng Telegram trên máy tính) và xác nhận. ViberVN Bot tự tạo bot, nhận diện ID Telegram của bạn để chỉ bạn nhắn được với bot, lưu thông tin và khởi động lại kết nối.
+  </Step>
+  <Step title="Nhắn thử">
+    Mở bot vừa tạo trong Telegram và gửi “Chào bạn”.
+  </Step>
+</Steps>
+
+## Cách thủ công: tự tạo bot với BotFather
+
+<Steps>
+  <Step title="Tạo bot">
+    Trong Telegram, tìm **@BotFather**, gửi `/newbot`, đặt tên hiển thị và tên người dùng (phải kết thúc bằng `bot`, ví dụ `minh_tro_ly_bot`).
+  </Step>
+  <Step title="Sao chép token">
+    BotFather gửi cho bạn một **token** dạng `123456789:ABCdef…`. Giữ bí mật token này.
+  </Step>
+  <Step title="Lấy ID Telegram của bạn">
+    Nhắn cho **@userinfobot** để biết ID số của bạn.
+  </Step>
+  <Step title="Dán vào ứng dụng">
+    Ở **Plugin → Nhắn tin → Telegram**, dán token, thêm ID của bạn vào **Người dùng được phép**, lưu rồi bấm **Khởi động lại ngay**.
+  </Step>
+</Steps>
+
+<Warning>
+Ai có token đều điều khiển được bot. Nếu lỡ để lộ, gửi `/revoke` cho @BotFather để thu hồi rồi tạo token mới.
+</Warning>
+
+## Mẹo
+
+- Gửi **tin nhắn thoại**, bot tự chuyển thành chữ.
+- Gửi ảnh, PDF, file Excel để bot đọc và xử lý.
+- Gõ `/sethome` trong cuộc trò chuyện với bot để nhận kết quả các [tự động hóa](/huong-dan/tu-dong-hoa) tại đây.
+- Muốn dùng bot trong nhóm, thêm bot vào nhóm và nhắc tên bot khi giao việc.

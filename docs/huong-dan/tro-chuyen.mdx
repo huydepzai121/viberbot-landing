@@ -1,0 +1,48 @@
+---
+title: "Trò chuyện và giao việc"
+description: "Cách nhắn việc cho bot, đính kèm file, dùng giọng nói và làm việc với kết quả."
+icon: "message"
+---
+
+{/* IMG:chat */}
+
+## Giao một việc
+
+Gõ yêu cầu vào ô nhắn tin rồi nhấn <kbd>Enter</kbd>. Hãy nói rõ **kết quả bạn muốn nhận**, bot sẽ tự lo các bước ở giữa.
+
+<CardGroup cols={2}>
+  <Card title="Chưa rõ" icon="xmark">
+    “Tìm khách sạn Đà Nẵng”
+  </Card>
+  <Card title="Rõ ràng" icon="check">
+    “Tìm 3 khách sạn gần biển Mỹ Khê, dưới 1,5 triệu/đêm, có hồ bơi, cho 2 người từ 20 đến 22/12. Lập bảng so sánh.”
+  </Card>
+</CardGroup>
+
+Trong lúc làm, bot hiện các bước đang thực hiện. Khi xong, các bước này được gộp lại trong một dòng **Đã làm trong …** mà bạn có thể bấm để xem chi tiết.
+
+## Đính kèm file và ảnh
+
+Kéo thả file vào ô nhắn tin, dán ảnh bằng <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>V</kbd>, hoặc bấm nút đính kèm. Bot đọc được PDF, Word, Excel, ảnh chụp hóa đơn, ảnh màn hình…
+
+## Nói thay vì gõ
+
+Bấm **micro** để đọc tin nhắn. Rê chuột lên micro để bật **Đọc to câu trả lời**. Nút bên phải micro mở một cuộc trò chuyện bằng giọng nói liên tục.
+
+## Thẻ để bấm chọn
+
+Với những việc như đặt bàn, mua hàng, chọn suất chiếu hay tạo mã chuyển khoản VietQR, bot có thể trả lời bằng **thẻ** có nút bấm. Bấm vào một lựa chọn trên thẻ cũng giống như bạn nhắn câu trả lời đó.
+
+## Dừng, làm lại, hoàn tác
+
+- Gửi tin nhắn mới trong lúc bot đang làm để **chuyển hướng** bot.
+- Gõ `/retry` để bot trả lời lại, `/undo` để bỏ lượt vừa rồi.
+- Gõ `/new` để bắt đầu cuộc trò chuyện mới với ngữ cảnh trống.
+
+<Tip>
+Gõ `/` trong ô nhắn tin để xem toàn bộ lệnh và kỹ năng có thể dùng.
+</Tip>
+
+## Chế độ phê duyệt lệnh
+
+Khi bot muốn chạy một lệnh có thể gây ảnh hưởng tới máy (ví dụ xoá file), ứng dụng hỏi bạn trước. Mở menu mô hình trong ô nhắn tin để chọn **Chế độ phê duyệt**: thủ công, thông minh hoặc tắt. Chỉ tắt khi bạn hiểu rõ bot sẽ làm gì. Xem thêm ở [An toàn và chi phí](/huong-dan/an-toan-va-chi-phi).

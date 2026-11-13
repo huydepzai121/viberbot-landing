@@ -1,0 +1,89 @@
+---
+title: "Cài đặt"
+description: "Tải và cài ViberVN Bot trên Windows, macOS hoặc Linux."
+icon: "download"
+---
+
+## Yêu cầu
+
+| Hệ điều hành | Phiên bản | Bộ cài |
+|---|---|---|
+| Windows | Windows 11 bản 22H2 trở lên, x64 | `.msix` + chứng chỉ `.cer` |
+| macOS | macOS 13 trở lên, Apple Silicon hoặc Intel | `.dmg` |
+| Linux | x86_64 hoặc arm64 | `.AppImage` |
+
+Tải bộ cài mới nhất ở [trang phát hành](https://github.com/nullmastermind/vibervn-bot-releases/releases).
+
+<Tabs>
+  <Tab title="Windows">
+    <Steps>
+      <Step title="Tải hai file">
+        Tải file `VibervnbotBundled-…-win-x64.msix` và file chứng chỉ `ViberVN-signing.cer`.
+      </Step>
+      <Step title="Tin cậy chứng chỉ (chỉ làm một lần)">
+        Mở **PowerShell** bằng quyền Administrator (chuột phải vào PowerShell, chọn *Run as administrator*), di chuyển tới thư mục chứa file vừa tải rồi chạy:
+
+        ```powershell
+        Import-Certificate -FilePath .\ViberVN-signing.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+        ```
+      </Step>
+      <Step title="Cài ứng dụng">
+        Nhấp đúp file `.msix` và chọn **Install**. Sau khi cài xong, mở ViberVN Bot từ menu Start.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="macOS">
+    <Steps>
+      <Step title="Chọn đúng bản">
+        Máy dùng chip M1, M2, M3… tải bản **Apple Silicon** (`mac-arm64.dmg`). Máy chip Intel tải bản **Intel** (`mac-x64.dmg`).
+      </Step>
+      <Step title="Kéo vào Applications">
+        Mở file `.dmg` và kéo ViberVN Bot vào thư mục **Applications**.
+      </Step>
+      <Step title="Mở lần đầu">
+        macOS sẽ chặn lần đầu vì ứng dụng tải từ Internet. Vào **System Settings → Privacy & Security**, kéo xuống và chọn **Open Anyway**.
+
+        Nếu vẫn không mở được, mở ứng dụng **Terminal** và chạy:
+
+        ```bash
+        xattr -dr com.apple.quarantine "/Applications/ViberVN Bot.app"
+        ```
+
+        Nếu macOS báo ứng dụng bị hỏng, chạy thêm lệnh sau rồi mở lại:
+
+        ```bash
+        codesign --force --deep --sign - "/Applications/ViberVN Bot.app"
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Linux">
+    <Steps>
+      <Step title="Tải đúng kiến trúc">
+        Máy thông thường tải bản `x86_64`. Máy ARM (ví dụ Raspberry Pi 64-bit) tải bản `arm64`.
+      </Step>
+      <Step title="Cho phép chạy và mở">
+        ```bash
+        chmod +x VibervnbotBundled-*-linux-x86_64.AppImage
+        ./VibervnbotBundled-*-linux-x86_64.AppImage
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+<Warning>
+Bộ cài chưa được ký bởi nhà phát hành mà hệ điều hành tin cậy sẵn, nên mỗi hệ điều hành sẽ cảnh báo **một lần** khi cài. Đây là điều bình thường. Chỉ tải bộ cài từ trang phát hành chính thức.
+</Warning>
+
+## Cập nhật lên bản mới
+
+Tải bộ cài bản mới và **cài đè** lên bản cũ. Lịch sử trò chuyện, trí nhớ và cài đặt của bạn được giữ nguyên.
+
+## Gỡ cài đặt
+
+- **Windows:** Settings → Apps → Installed apps → ViberVN Bot → Uninstall.
+- **macOS:** kéo ViberVN Bot từ Applications vào Thùng rác.
+- **Linux:** xoá file `.AppImage`.
+
+Gỡ ứng dụng không xoá dữ liệu của bạn. Xem [Khắc phục sự cố](/khac-phuc-su-co) nếu muốn xoá sạch.

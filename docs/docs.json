@@ -1,0 +1,83 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "ViberVN Bot",
+  "description": "Hướng dẫn sử dụng ViberVN Bot, trợ lý AI cá nhân chạy trên máy tính của bạn.",
+  "colors": {
+    "primary": "#10b981",
+    "light": "#34d399",
+    "dark": "#059669"
+  },
+  "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "appearance": {
+    "default": "dark"
+  },
+  "fonts": {
+    "family": "Be Vietnam Pro"
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Tải ứng dụng",
+      "href": "https://github.com/nullmastermind/vibervn-bot-releases/releases"
+    }
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Bắt đầu",
+        "pages": [
+          "index",
+          "bat-dau-nhanh",
+          "cai-dat-va-thiet-lap/cai-dat",
+          "cai-dat-va-thiet-lap/chon-mo-hinh"
+        ]
+      },
+      {
+        "group": "Dùng hằng ngày",
+        "pages": [
+          "huong-dan/giao-dien",
+          "huong-dan/tro-chuyen",
+          "huong-dan/may-tinh",
+          "huong-dan/tu-dong-hoa",
+          "huong-dan/thu-vien",
+          "huong-dan/tri-nho-va-ky-nang",
+          "huong-dan/plugin"
+        ]
+      },
+      {
+        "group": "Nhắn tin và thiết bị",
+        "pages": [
+          "nhan-tin/tong-quan",
+          "nhan-tin/telegram",
+          "nhan-tin/zalo",
+          "nhan-tin/dien-thoai",
+          "nhan-tin/lien-ket-thiet-bi"
+        ]
+      },
+      {
+        "group": "Nâng cao",
+        "pages": [
+          "huong-dan/doi-bot",
+          "huong-dan/an-toan-va-chi-phi",
+          "cai-dat-va-thiet-lap/cai-dat-ung-dung",
+          "dong-lenh"
+        ]
+      },
+      {
+        "group": "Hỗ trợ",
+        "pages": [
+          "khac-phuc-su-co",
+          "hoi-dap"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {}
+  }
+}

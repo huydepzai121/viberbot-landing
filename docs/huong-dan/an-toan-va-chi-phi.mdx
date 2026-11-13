@@ -1,0 +1,44 @@
+---
+title: "An toàn và chi phí"
+description: "Kiểm soát những gì bot được làm, những gì gửi đi và số tiền AI bạn chi mỗi ngày."
+icon: "shield-check"
+---
+
+## Duyệt lệnh nguy hiểm
+
+Trước khi chạy lệnh có thể ảnh hưởng tới máy, bot hỏi bạn. Bạn chọn **Chế độ phê duyệt** trong menu mô hình của ô nhắn tin:
+
+| Chế độ | Ý nghĩa |
+|---|---|
+| Thủ công | Hỏi bạn mỗi lần có lệnh nguy hiểm |
+| Thông minh | Tự cho qua lệnh an toàn, chỉ hỏi lệnh đáng ngờ |
+| Tắt | Không hỏi. Chỉ dùng khi bạn hiểu rõ rủi ro |
+
+## Duyệt trước khi gửi tin nhắn và thanh toán
+
+Bật plugin **outbound-approval** để mọi tin nhắn bot gửi cho người khác và mọi lệnh kiểu thanh toán đều phải chờ bạn bấm **Duyệt**. Bạn duyệt được ngay trên Telegram, Discord hoặc Slack. Không trả lời trong 5 phút thì yêu cầu bị từ chối, và việc chạy theo lịch không bao giờ tự gửi tin khi plugin này đang bật.
+
+```bash
+vibervnbot plugins enable outbound-approval
+```
+
+## Giới hạn chi phí AI
+
+Đặt mức chi tối đa (đô la Mỹ) theo ngày hoặc theo tháng. Khi chạm mức, mọi nơi (trò chuyện, tự động hóa, dòng lệnh) dừng trước lần gọi mô hình kế tiếp và báo rõ đã chạm giới hạn nào.
+
+```bash
+vibervnbot config set cost_cap.daily_usd 5
+vibervnbot config set cost_cap.monthly_usd 50
+```
+
+Đặt về `0` để tắt. Gõ `/usage` trong cuộc trò chuyện để xem mức dùng hiện tại.
+
+## Kho bảo mật
+
+**Cài đặt → Kho bảo mật** lưu thông tin đăng nhập, thẻ và thông tin liên hệ để bot dùng khi điền biểu mẫu, thay vì bạn phải dán vào tin nhắn.
+
+## Lời khuyên
+
+- Không dán mật khẩu hay mã OTP vào tin nhắn. Dùng [quyền điều khiển trình duyệt](/huong-dan/may-tinh#giành-quyền-điều-khiển) hoặc Kho bảo mật.
+- Ở Telegram, chỉ cho phép ID tài khoản của bạn nhắn với bot.
+- Người đăng nhập được vào ứng dụng web của bạn có thể chạy lệnh trên máy bạn. Đặt mật khẩu mạnh khi [mở trên điện thoại](/nhan-tin/dien-thoai).
