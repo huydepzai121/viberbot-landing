@@ -9,19 +9,21 @@ import { DownloadSection } from "@/components/sections/download";
 import { Pricing } from "@/components/sections/pricing";
 import { FinalCta, SiteFooter } from "@/components/sections/cta-footer";
 import { SectionHead } from "@/components/sections/section-head";
+import { buildTimeVersion } from "@/lib/release";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const version = await buildTimeVersion();
   return (
     <>
       <div className="page-glow" aria-hidden />
       <SiteHeader />
       <main id="top" className="relative z-10 flex-1">
-        <Hero shot="/screens/04-chat-reply.webp" />
+        <Hero shot="/screens/04-chat-reply.webp" version={version} />
         <Marquee />
         <Features />
         <How />
         <Channels />
-        <DownloadSection />
+        <DownloadSection version={version} />
         <Pricing />
         <section id="faq" className="scroll-mt-20 px-4 py-24 sm:px-6">
           <div className="mx-auto w-full max-w-[1200px]">
@@ -31,7 +33,7 @@ export default function HomePage() {
         </section>
         <FinalCta />
       </main>
-      <SiteFooter />
+      <SiteFooter version={version} />
     </>
   );
 }

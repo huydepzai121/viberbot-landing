@@ -1,7 +1,8 @@
 import { ArrowRight, BookOpen } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { DOCS_URL, RELEASES, VERSION } from "@/lib/site";
+import { LatestVersion } from "@/components/latest-version";
+import { DOCS_URL, RELEASES } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function FinalCta() {
@@ -32,7 +33,7 @@ export function FinalCta() {
   );
 }
 
-export function SiteFooter() {
+export function SiteFooter({ version }: { version: string }) {
   const cols = [
     {
       t: "Sản phẩm",
@@ -79,7 +80,9 @@ export function SiteFooter() {
       <div className="border-t border-white/[0.06]">
         <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:justify-between sm:px-6">
           <span>© {new Date().getFullYear()} ViberVN Bot</span>
-          <span>Phiên bản {VERSION}</span>
+          <span>
+            Phiên bản <LatestVersion initial={version} />
+          </span>
         </div>
       </div>
     </footer>

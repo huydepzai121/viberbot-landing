@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { ArrowRight, BookOpen, CalendarClock, Check, MessageCircle, ShieldCheck } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { DOCS_URL, VERSION } from "@/lib/site";
+import { LatestVersion } from "@/components/latest-version";
+import { DOCS_URL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-export function Hero({ shot }: { shot: string }) {
+export function Hero({ shot, version }: { shot: string; version: string }) {
   return (
     <section className="relative overflow-hidden px-4 pt-14 sm:px-6 sm:pt-20">
       <div className="grid-bg pointer-events-none absolute inset-0 -z-0" aria-hidden />
@@ -14,7 +15,7 @@ export function Hero({ shot }: { shot: string }) {
           className="group mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1 pl-1 pr-3 text-xs text-muted-foreground backdrop-blur transition hover:border-emerald-400/30"
         >
           <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 font-semibold text-emerald-300">
-            v{VERSION}
+            v<LatestVersion initial={version} />
           </span>
           Dạy bot một việc bằng cách làm mẫu
           <ArrowRight className="size-3 transition group-hover:translate-x-0.5" />

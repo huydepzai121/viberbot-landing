@@ -1,6 +1,7 @@
 import { Apple, Download as DownloadIcon, Monitor, Terminal } from "lucide-react";
 import { InstallTabs } from "@/components/install-tabs";
-import { DL, RELEASES, VERSION } from "@/lib/site";
+import { LatestVersion } from "@/components/latest-version";
+import { DOWNLOADS, RELEASES } from "@/lib/site";
 import { SectionHead } from "./section-head";
 
 const platforms = [
@@ -9,8 +10,8 @@ const platforms = [
     title: "Windows 11",
     note: "x64 · 22H2 trở lên",
     links: [
-      { label: "Bộ cài .msix", badge: "x64", href: `${DL}/VibervnbotBundled-${VERSION}-win-x64.msix` },
-      { label: "Chứng chỉ ViberVN-signing.cer", badge: "cert", href: `${DL}/ViberVN-signing.cer` },
+      { label: "Bộ cài .msix", badge: "x64", href: DOWNLOADS.windows },
+      { label: "Chứng chỉ ViberVN-signing.cer", badge: "cert", href: DOWNLOADS.windowsCert },
     ],
   },
   {
@@ -18,8 +19,8 @@ const platforms = [
     title: "macOS 13+",
     note: "Apple Silicon hoặc Intel",
     links: [
-      { label: "Bộ cài .dmg", badge: "Apple Silicon", href: `${DL}/VibervnbotBundled-${VERSION}-mac-arm64.dmg` },
-      { label: "Bộ cài .dmg", badge: "Intel", href: `${DL}/VibervnbotBundled-${VERSION}-mac-x64.dmg` },
+      { label: "Bộ cài .dmg", badge: "Apple Silicon", href: DOWNLOADS.macArm64 },
+      { label: "Bộ cài .dmg", badge: "Intel", href: DOWNLOADS.macX64 },
     ],
   },
   {
@@ -27,19 +28,23 @@ const platforms = [
     title: "Linux",
     note: "AppImage, chạy không cần cài",
     links: [
-      { label: ".AppImage", badge: "x86_64", href: `${DL}/VibervnbotBundled-${VERSION}-linux-x86_64.AppImage` },
-      { label: ".AppImage", badge: "arm64", href: `${DL}/VibervnbotBundled-${VERSION}-linux-arm64.AppImage` },
+      { label: ".AppImage", badge: "x86_64", href: DOWNLOADS.linuxX64 },
+      { label: ".AppImage", badge: "arm64", href: DOWNLOADS.linuxArm64 },
     ],
   },
 ];
 
-export function DownloadSection() {
+export function DownloadSection({ version }: { version: string }) {
   return (
     <section id="download" className="scroll-mt-20 px-4 py-24 sm:px-6">
       <div className="mx-auto w-full max-w-[1200px]">
         <SectionHead
           kicker="Tải về"
-          title={`Tải ViberVN Bot v${VERSION}`}
+          title={
+            <>
+              Tải ViberVN Bot v<LatestVersion initial={version} />
+            </>
+          }
           desc="Chọn bản cho hệ điều hành của bạn. Lần đầu mở, hệ điều hành có thể cảnh báo một lần; làm theo hướng dẫn ngay bên dưới."
           center
         />
