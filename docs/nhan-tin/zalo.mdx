@@ -1,0 +1,37 @@
+---
+title: "Zalo"
+description: "Kết nối bot với Zalo qua Zalo Bot Platform chính thức."
+icon: "comment-dots"
+---
+
+Zalo được hỗ trợ qua plugin **zalo-platform** trong danh mục plugin. Plugin dùng API chính thức của Zalo Bot Platform, hoạt động với tin nhắn riêng và nhóm.
+
+<Info>
+Plugin Zalo do cộng đồng phát triển và được kiểm duyệt trước khi đưa vào danh mục. Plugin gửi và nhận tin nhắn qua Zalo Bot API bằng token bot của bạn.
+</Info>
+
+## Thiết lập
+
+<Steps>
+  <Step title="Tạo bot trên Zalo Bot Platform">
+    Tạo một bot Zalo trên trang Zalo Bot Platform và sao chép **token** của bot.
+  </Step>
+  <Step title="Cài plugin Zalo">
+    Mở **Plugin**, tìm **zalo-platform** trong danh mục và bấm cài. Hoặc chạy:
+
+    ```bash
+    vibervnbot plugins install zalo-platform
+    ```
+  </Step>
+  <Step title="Nhập token">
+    Làm theo bước thiết lập của plugin và dán token bot Zalo khi được hỏi.
+  </Step>
+  <Step title="Khởi động lại kết nối và nhắn thử">
+    Bấm **Khởi động lại ngay** khi ứng dụng nhắc, rồi nhắn “Chào bạn” cho bot trên Zalo.
+  </Step>
+</Steps>
+
+## Lưu ý
+
+- Lịch sử nhóm chat Zalo được lưu trên máy của bạn.
+- Giữ bí mật token bot. Nếu lộ, tạo token mới trên Zalo Bot Platform và nhập lại.

@@ -1,0 +1,42 @@
+---
+title: "Dòng lệnh cơ bản"
+description: "Các lệnh vibervnbot hữu ích cho người thích dùng terminal."
+icon: "terminal"
+---
+
+Ứng dụng desktop đã đủ cho phần lớn người dùng. Nếu thích terminal, lệnh `vibervnbot` dùng chung cài đặt, cuộc trò chuyện và trí nhớ với ứng dụng.
+
+## Lệnh thường dùng
+
+| Lệnh | Tác dụng |
+|---|---|
+| `vibervnbot` | Mở trò chuyện trong terminal |
+| `vibervnbot chat -q "câu hỏi"` | Hỏi một câu rồi thoát |
+| `vibervnbot model` | Chọn nhà cung cấp và mô hình AI |
+| `vibervnbot setup` | Trình thiết lập từng bước |
+| `vibervnbot status` | Xem trạng thái hiện tại |
+| `vibervnbot doctor` | Tự kiểm tra và chỉ ra lỗi cấu hình |
+| `vibervnbot gateway` | Chạy kết nối nhắn tin (Telegram, Zalo…) |
+| `vibervnbot gateway restart` | Khởi động lại kết nối nhắn tin |
+| `vibervnbot cron list` | Liệt kê tự động hóa |
+| `vibervnbot plugins install <tên>` | Cài plugin từ danh mục |
+| `vibervnbot config set <khóa> <giá trị>` | Đổi một cài đặt |
+| `vibervnbot config get <khóa>` | Xem một cài đặt |
+| `vibervnbot insights` | Thống kê sử dụng và chi phí |
+
+## Ví dụ
+
+```bash
+# Hỏi nhanh
+vibervnbot chat -q "Tỷ giá USD hôm nay khoảng bao nhiêu?"
+
+# Kiểm tra khi có lỗi
+vibervnbot doctor
+
+# Đặt giới hạn chi phí 5 USD mỗi ngày
+vibervnbot config set cost_cap.daily_usd 5
+```
+
+## Lệnh trong cuộc trò chuyện
+
+Trong terminal và ứng dụng nhắn tin đều dùng được: `/new`, `/retry`, `/undo`, `/model`, `/usage`, `/compress` (làm gọn hội thoại dài). Nhấn <kbd>Ctrl</kbd> + <kbd>C</kbd> để dừng bot giữa chừng.

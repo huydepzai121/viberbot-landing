@@ -15,9 +15,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ViberVN Bot — Trợ lý AI trên máy của bạn",
+  title: "ViberVN Bot — Trợ lý AI làm việc thay bạn",
   description:
-    "ViberVN Bot — Trợ lý AI cá nhân chạy trên máy của bạn: desktop, terminal và các nền tảng nhắn tin. Tải bộ cài từ GitHub Releases.",
+    "Trợ lý AI cá nhân chạy trên máy tính của bạn: giao việc bằng tiếng Việt, bot tự dùng trình duyệt, chạy việc theo lịch và báo lại qua Telegram, Zalo.",
 };
 
 export default function RootLayout({

@@ -6,20 +6,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export function InstallTabs() {
   return (
     <Tabs defaultValue="windows" className="w-full">
-      <TabsList className="mb-4 h-10 w-full max-w-md bg-muted/60">
-        <TabsTrigger value="windows" className="flex-1">
+      <TabsList className="mx-auto mb-4 h-10 w-full max-w-md rounded-full bg-white/[0.05] p-1">
+        <TabsTrigger value="windows" className="flex-1 rounded-full">
           Windows
         </TabsTrigger>
-        <TabsTrigger value="macos" className="flex-1">
+        <TabsTrigger value="macos" className="flex-1 rounded-full">
           macOS
         </TabsTrigger>
-        <TabsTrigger value="linux" className="flex-1">
+        <TabsTrigger value="linux" className="flex-1 rounded-full">
           Linux
         </TabsTrigger>
       </TabsList>
 
       <TabsContent value="windows">
-        <Card className="glass border-border bg-transparent ring-0">
+        <Card className="glass rounded-3xl border-white/[0.08] bg-transparent ring-0">
           <CardHeader>
             <CardTitle className="text-lg">Windows 11 22H2+</CardTitle>
           </CardHeader>
@@ -32,7 +32,7 @@ export function InstallTabs() {
               . Tin cậy chứng chỉ <strong className="text-foreground">một lần</strong> trong
               PowerShell chạy bằng quyền Administrator:
             </p>
-            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-[#b8f5d0]">
+            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-emerald-200">
               {`Import-Certificate -FilePath .\\ViberVN-signing.cer -CertStoreLocation Cert:\\LocalMachine\\TrustedPeople`}
             </pre>
             <p>
@@ -47,7 +47,7 @@ export function InstallTabs() {
       </TabsContent>
 
       <TabsContent value="macos">
-        <Card className="glass border-border bg-transparent ring-0">
+        <Card className="glass rounded-3xl border-white/[0.08] bg-transparent ring-0">
           <CardHeader>
             <CardTitle className="text-lg">macOS 13+</CardTitle>
           </CardHeader>
@@ -60,11 +60,11 @@ export function InstallTabs() {
               và kéo ứng dụng vào Applications. Lần đầu macOS sẽ chặn: System Settings → Privacy
               &amp; Security → Open Anyway, hoặc:
             </p>
-            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-[#b8f5d0]">
+            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-emerald-200">
               {`xattr -dr com.apple.quarantine "/Applications/ViberVN Bot.app"`}
             </pre>
             <p>Nếu vẫn báo ứng dụng bị hỏng, tự ký một lần:</p>
-            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-[#b8f5d0]">
+            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-emerald-200">
               {`codesign --force --deep --sign - "/Applications/ViberVN Bot.app"`}
             </pre>
           </CardContent>
@@ -72,7 +72,7 @@ export function InstallTabs() {
       </TabsContent>
 
       <TabsContent value="linux">
-        <Card className="glass border-border bg-transparent ring-0">
+        <Card className="glass rounded-3xl border-white/[0.08] bg-transparent ring-0">
           <CardHeader>
             <CardTitle className="text-lg">Linux</CardTitle>
           </CardHeader>
@@ -87,7 +87,7 @@ export function InstallTabs() {
               </code>{" "}
               đúng kiến trúc rồi chạy nó.
             </p>
-            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-[#b8f5d0]">
+            <pre className="overflow-x-auto rounded-xl border border-border bg-black/40 p-4 font-mono text-xs text-emerald-200">
               {`chmod +x VibervnbotBundled-*-linux-x86_64.AppImage
 ./VibervnbotBundled-*-linux-x86_64.AppImage`}
             </pre>

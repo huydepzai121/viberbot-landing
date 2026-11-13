@@ -1,0 +1,46 @@
+---
+title: "Nhắn tin với bot"
+description: "Giao việc cho bot từ Telegram, Zalo và các ứng dụng nhắn tin khác."
+icon: "comments"
+---
+
+Sau khi kết nối, bạn nhắn cho bot như nhắn với một người. Đó vẫn là **cùng một bot** với cùng trí nhớ và kỹ năng như trong ứng dụng trên máy tính.
+
+<CardGroup cols={2}>
+  <Card title="Telegram" icon="telegram" href="/nhan-tin/telegram">
+    Thiết lập nhanh bằng mã QR, hỗ trợ tin nhắn thoại, ảnh, file và nhóm.
+  </Card>
+  <Card title="Zalo" icon="comment-dots" href="/nhan-tin/zalo">
+    Qua Zalo Bot Platform chính thức, dùng được trong tin nhắn riêng và nhóm.
+  </Card>
+  <Card title="Mở trên điện thoại" icon="qrcode" href="/nhan-tin/dien-thoai">
+    Dùng toàn bộ ứng dụng trên điện thoại bằng mã QR.
+  </Card>
+  <Card title="Liên kết thiết bị" icon="link" href="/nhan-tin/lien-ket-thiet-bi">
+    Giao việc cho một máy khác ở nhà hay văn phòng.
+  </Card>
+</CardGroup>
+
+## Các kênh khác
+
+Bot còn kết nối được với Discord, Slack, WhatsApp, Signal, Email, Microsoft Teams, Matrix, LINE và nhiều kênh khác. Thiết lập trong **Plugin → Nhắn tin**.
+
+<Frame caption="Các kênh nhắn tin nằm ở cột bên trái của Plugin › Nhắn tin">
+  <img src="/images/22-plugins-messaging-telegram.png" alt="Danh sách kênh nhắn tin trong Plugin › Nhắn tin" />
+</Frame>
+
+## Lệnh dùng trong ứng dụng nhắn tin
+
+| Lệnh | Tác dụng |
+|---|---|
+| `/new` | Bắt đầu cuộc trò chuyện mới |
+| `/stop` | Dừng việc bot đang làm |
+| `/retry`, `/undo` | Trả lời lại, hoặc bỏ lượt vừa rồi |
+| `/model` | Xem hoặc đổi mô hình AI |
+| `/usage` | Xem mức dùng và chi phí |
+| `/status` | Xem trạng thái kết nối |
+| `/sethome` | Đặt cuộc trò chuyện này làm nơi nhận kết quả tự động hóa |
+
+<Note>
+Bot nhận tin nhắn khi ứng dụng trên máy tính đang chạy. Nếu máy tắt, tin nhắn sẽ được xử lý khi máy bật lại.
+</Note>

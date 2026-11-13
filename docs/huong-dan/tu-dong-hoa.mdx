@@ -1,0 +1,67 @@
+---
+title: "Tự động hóa"
+description: "Cho bot tự làm việc theo lịch: bản tin sáng, tóm tắt email, theo dõi trang web."
+icon: "clock"
+---
+
+<Frame caption="Trang Tự động hóa">
+  <img src="/images/15-automations.png" alt="Trang Tự động hóa với danh sách lịch chạy và các mẫu" />
+</Frame>
+
+Tự động hóa là một việc bot tự chạy theo lịch, rồi gửi kết quả cho bạn trong ứng dụng hoặc qua Telegram, Zalo.
+
+## Cách nhanh nhất: nhắn cho bot
+
+Chỉ cần nói lịch và nội dung bằng lời:
+
+- “Mỗi sáng 7 giờ gửi mình bản tin: thời tiết Hà Nội, lịch họp hôm nay và 5 tin công nghệ nổi bật.”
+- “17:30 các ngày trong tuần, tóm tắt email chưa đọc quan trọng.”
+- “Cứ 3 tiếng kiểm tra trang này, báo mình nếu giá giảm dưới 2 triệu.”
+
+Bot sẽ tạo tự động hóa và cho bạn biết lịch đã đặt.
+
+## Tạo trong ứng dụng
+
+<Steps>
+  <Step title="Mở Tự động hóa">
+    Chọn **Tự động hóa** ở thanh bên trái.
+  </Step>
+  <Step title="Tạo mới hoặc dùng mẫu">
+    Bấm **Tự động hóa mới**, hoặc xem phần **Mẫu** (lọc theo Tin tức, Năng suất, Tài chính, Nghiên cứu, Đời sống) rồi bấm **Thêm** để dùng nhanh một việc phổ biến. Mẫu nào cần một kết nối bạn chưa có (ví dụ email) sẽ ghi rõ.
+  </Step>
+  <Step title="Đặt lịch và nơi nhận">
+    Trong cửa sổ **Tác vụ cron mới**, đặt **Tên**, viết việc cần làm ở ô **Prompt**, chọn **Tần suất**, nơi nhận ở **Gửi đến** (**Desktop này** hoặc **Bot Chat**) và **Model**, rồi bấm **Tạo cron**.
+  </Step>
+</Steps>
+
+<Frame caption="Cửa sổ Tác vụ cron mới">
+  <img src="/images/16-automation-new.png" alt="Cửa sổ tạo tự động hóa mới" />
+</Frame>
+
+## Quản lý
+
+Bấm vào một tự động hóa để xem **Tần suất**, **Lần cuối**, **Tiếp theo**, nơi **Gửi đến** và **Prompt**.
+
+- **Tạm dừng** để ngừng tạm thời, **Kích hoạt ngay** để chạy thử luôn.
+- **Lịch sử chạy** lưu từng lần chạy để bạn xem lại kết quả hoặc lỗi.
+
+<Frame caption="Chi tiết tự động hóa Bản tin sáng">
+  <img src="/images/18-automation-runs.png" alt="Chi tiết một tự động hóa và lịch sử chạy" />
+</Frame>
+
+## Bản tin sáng
+
+Mẫu bản tin sáng tổng hợp những gì bạn cần biết đầu ngày, gồm cả các việc còn dở và chi phí AI của ngày hôm qua. Thêm mẫu **Morning briefing** từ phần **Mẫu**, chọn giờ và nơi gửi rồi bấm **Lên lịch**. Nếu gửi tới **Bot Chat**, bản tin hiện trong cuộc trò chuyện chính của bot.
+
+## Giờ yên tĩnh
+
+Không muốn bị làm phiền ban đêm? Đặt giờ yên tĩnh: các việc tới hạn trong khoảng đó được giữ lại và chạy một lần khi hết giờ, nên kết quả ban đêm tới cùng lúc vào buổi sáng.
+
+```bash
+vibervnbot config set cron.quiet_hours.start 22:30
+vibervnbot config set cron.quiet_hours.end 07:00
+```
+
+<Note>
+Bản miễn phí chạy trên máy bạn, nên tự động hóa chỉ chạy khi máy đang bật và ứng dụng đang mở. Bật **Giữ máy tính thức** trong **Cài đặt → Nâng cao** để máy không ngủ giữa chừng.
+</Note>
