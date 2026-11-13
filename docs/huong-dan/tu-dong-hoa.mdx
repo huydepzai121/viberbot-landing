@@ -4,7 +4,9 @@ description: "Cho bot tự làm việc theo lịch: bản tin sáng, tóm tắt 
 icon: "clock"
 ---
 
-{/* IMG:automations */}
+<Frame caption="Trang Tự động hóa">
+  <img src="/images/15-automations.png" alt="Trang Tự động hóa với danh sách lịch chạy và các mẫu" />
+</Frame>
 
 Tự động hóa là một việc bot tự chạy theo lịch, rồi gửi kết quả cho bạn trong ứng dụng hoặc qua Telegram, Zalo.
 
@@ -25,21 +27,31 @@ Bot sẽ tạo tự động hóa và cho bạn biết lịch đã đặt.
     Chọn **Tự động hóa** ở thanh bên trái.
   </Step>
   <Step title="Tạo mới hoặc dùng mẫu">
-    Bấm **Tự động hóa mới**, hoặc xem phần **Mẫu** để thêm nhanh một việc phổ biến chỉ bằng một cú nhấp. Mẫu nào cần một kết nối bạn chưa có (ví dụ email) sẽ ghi rõ.
+    Bấm **Tự động hóa mới**, hoặc xem phần **Mẫu** (lọc theo Tin tức, Năng suất, Tài chính, Nghiên cứu, Đời sống) rồi bấm **Thêm** để dùng nhanh một việc phổ biến. Mẫu nào cần một kết nối bạn chưa có (ví dụ email) sẽ ghi rõ.
   </Step>
   <Step title="Đặt lịch và nơi nhận">
-    Viết việc cần làm, chọn lịch chạy và nơi gửi kết quả, rồi lưu.
+    Trong cửa sổ **Tác vụ cron mới**, đặt **Tên**, viết việc cần làm ở ô **Prompt**, chọn **Tần suất**, nơi nhận ở **Gửi đến** (**Desktop này** hoặc **Bot Chat**) và **Model**, rồi bấm **Tạo cron**.
   </Step>
 </Steps>
 
+<Frame caption="Cửa sổ Tác vụ cron mới">
+  <img src="/images/16-automation-new.png" alt="Cửa sổ tạo tự động hóa mới" />
+</Frame>
+
 ## Quản lý
 
-- Mỗi tự động hóa có thể **tạm dừng**, **tiếp tục**, **sửa** hoặc **xoá**.
-- Tab **Lượt chạy** lưu lịch sử từng lần chạy để bạn xem lại kết quả hoặc lỗi.
+Bấm vào một tự động hóa để xem **Tần suất**, **Lần cuối**, **Tiếp theo**, nơi **Gửi đến** và **Prompt**.
+
+- **Tạm dừng** để ngừng tạm thời, **Kích hoạt ngay** để chạy thử luôn.
+- **Lịch sử chạy** lưu từng lần chạy để bạn xem lại kết quả hoặc lỗi.
+
+<Frame caption="Chi tiết tự động hóa Bản tin sáng">
+  <img src="/images/18-automation-runs.png" alt="Chi tiết một tự động hóa và lịch sử chạy" />
+</Frame>
 
 ## Bản tin sáng
 
-Mẫu bản tin sáng tổng hợp những gì bạn cần biết đầu ngày, gồm cả các việc còn dở và chi phí AI của ngày hôm qua. Thêm nó từ phần **Mẫu** rồi chỉnh giờ gửi theo ý bạn.
+Mẫu bản tin sáng tổng hợp những gì bạn cần biết đầu ngày, gồm cả các việc còn dở và chi phí AI của ngày hôm qua. Thêm mẫu **Morning briefing** từ phần **Mẫu**, chọn giờ và nơi gửi rồi bấm **Lên lịch**. Nếu gửi tới **Bot Chat**, bản tin hiện trong cuộc trò chuyện chính của bot.
 
 ## Giờ yên tĩnh
 

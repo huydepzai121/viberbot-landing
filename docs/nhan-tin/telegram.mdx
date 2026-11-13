@@ -6,14 +6,16 @@ icon: "telegram"
 
 ## Cách nhanh: tạo bot bằng mã QR
 
+<Note>
+Nút **Tạo bằng mã QR** chỉ có trong ứng dụng cài trên máy tính. Nếu không thấy nút này, dùng cách thủ công bên dưới.
+</Note>
+
 <Steps>
   <Step title="Mở trang Telegram">
     Vào **Plugin → Nhắn tin → Telegram**.
   </Step>
   <Step title="Chọn Thiết lập nhanh">
     Bấm **Tạo bằng mã QR**.
-
-    {/* IMG:telegram */}
   </Step>
   <Step title="Quét mã bằng Telegram">
     Quét mã bằng ứng dụng Telegram trên điện thoại (hoặc bấm **Mở Telegram** nếu đang dùng Telegram trên máy tính) và xác nhận. ViberVN Bot tự tạo bot, nhận diện ID Telegram của bạn để chỉ bạn nhắn được với bot, lưu thông tin và khởi động lại kết nối.
@@ -36,7 +38,11 @@ icon: "telegram"
     Nhắn cho **@userinfobot** để biết ID số của bạn.
   </Step>
   <Step title="Dán vào ứng dụng">
-    Ở **Plugin → Nhắn tin → Telegram**, dán token, thêm ID của bạn vào **Người dùng được phép**, lưu rồi bấm **Khởi động lại ngay**.
+    Ở **Plugin → Nhắn tin → Telegram**, dán token vào ô **Token bot**, điền ID của bạn vào **ID người dùng Telegram được phép** rồi bấm **Lưu thay đổi**. Ô **Webhook secret** có thể để trống.
+
+    <Frame caption="Plugin › Nhắn tin › Telegram">
+      <img src="/images/22-plugins-messaging-telegram.png" alt="Form kết nối Telegram trong Plugin › Nhắn tin" />
+    </Frame>
   </Step>
 </Steps>
 

@@ -8,19 +8,23 @@ ViberVN Bot không đi kèm mô hình AI riêng. Bạn chọn nhà cung cấp m�
 
 ## Lần đầu mở ứng dụng
 
-Màn hình chào mừng hỏi bạn muốn dùng nhà cung cấp nào. Chọn một nhà cung cấp, đăng nhập hoặc dán khóa API, rồi chọn mô hình. Nếu chưa có sẵn khóa, bạn có thể bỏ qua bước này và thiết lập sau.
+Màn hình **Hãy thiết lập ViberVN Bot cho bạn** hỏi bạn muốn dùng nhà cung cấp nào. Đăng nhập tài khoản, hoặc bấm **Tôi đã có khóa API**, chọn nhà cung cấp, dán khóa vào ô **Dán khóa API** (chưa có thì bấm **Lấy khóa**) rồi bấm **Kết nối**. Chưa có sẵn khóa thì bấm **Tôi sẽ chọn nhà cung cấp sau** để thiết lập sau.
 
-{/* IMG:onboarding */}
+<Frame caption="Màn hình thiết lập lần đầu › Tôi đã có khóa API">
+  <img src="/images/02-onboarding-api-key.png" alt="Chọn nhà cung cấp và dán khóa API" />
+</Frame>
 
 ## Đổi mô hình mặc định
 
-Mở **Cài đặt → Mô hình**, chọn nhà cung cấp và mô hình rồi bấm **Áp dụng**. Mô hình này được dùng cho cuộc trò chuyện mới, việc chạy theo lịch và các bot phụ.
+Mở **Cài đặt → Model → Model chính**, chọn **Nhà cung cấp** và **Model** rồi bấm **Áp dụng**. Mô hình này được dùng cho cuộc trò chuyện mới, việc chạy theo lịch và các bot phụ.
 
-{/* IMG:settings-model */}
+<Frame caption="Cài đặt › Model › Model chính">
+  <img src="/images/24-settings-model.png" alt="Cài đặt Model chính" />
+</Frame>
 
 ## Đổi mô hình cho một cuộc trò chuyện
 
-Bấm vào tên mô hình trong ô nhắn tin (bên trái nút micro) để chọn mô hình khác chỉ cho cuộc trò chuyện đang mở. Bấm ngôi sao cạnh một mô hình để đưa nó lên mục **Yêu thích**.
+Bấm vào tên mô hình trong ô nhắn tin (bên trái nút micro) để chọn mô hình khác chỉ cho cuộc trò chuyện đang mở. Ô **Tìm model** giúp tìm nhanh, ngôi sao cạnh một mô hình đánh dấu nó là yêu thích.
 
 <Tip>
 Đổi mô hình giữa một cuộc trò chuyện dài làm lần trả lời tiếp theo tốn phí hơn, vì mô hình mới phải đọc lại toàn bộ hội thoại. Với việc mới, mở cuộc trò chuyện mới sẽ tiết kiệm hơn.
@@ -37,6 +41,14 @@ Bấm vào tên mô hình trong ô nhắn tin (bên trái nút micro) để ch�
 | xAI Grok | Đăng nhập tài khoản | Đăng nhập qua trình duyệt |
 | Ollama | Chạy trên máy | Miễn phí, dữ liệu không rời khỏi máy, cần máy đủ mạnh |
 | Endpoint tuỳ chỉnh | Địa chỉ + khóa | Bất kỳ dịch vụ nào tương thích OpenAI hoặc Anthropic |
+
+## Thêm hoặc đổi khóa API
+
+Mở **Cài đặt → Model → Nhà cung cấp → Khóa API** để thêm hoặc thay khóa. Mục **Endpoint tuỳ chỉnh** ngay bên dưới dùng cho dịch vụ tương thích OpenAI hoặc mô hình tự chạy.
+
+<Frame caption="Cài đặt › Model › Nhà cung cấp › Khóa API">
+  <img src="/images/25-settings-providers-api-keys.png" alt="Cài đặt khóa API cho nhà cung cấp" />
+</Frame>
 
 <Note>
 Khóa API được lưu trên máy của bạn. Đừng chia sẻ khóa cho người khác. Nếu nghi ngờ khóa bị lộ, hãy thu hồi nó ở trang của nhà cung cấp và tạo khóa mới.
