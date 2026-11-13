@@ -73,7 +73,7 @@ export function Hero({ shot }: { shot: string }) {
           </div>
 
           <FloatCard
-            className="float-slow left-[-3%] top-[8%] hidden md:flex"
+            className="float-slow left-[-3%] top-[68%] hidden md:flex"
             icon={<CalendarClock className="size-4 text-emerald-300" />}
             title="Bản tin sáng"
             body="Đã gửi lúc 07:00"
@@ -85,7 +85,7 @@ export function Hero({ shot }: { shot: string }) {
             body="“Xong rồi, mình gửi file nhé”"
           />
           <FloatCard
-            className="float-slow bottom-[8%] right-[10%] hidden lg:flex"
+            className="float-slow bottom-[24%] right-[6%] hidden lg:flex"
             icon={<ShieldCheck className="size-4 text-violet-300" />}
             title="Chờ bạn duyệt"
             body="Gửi email cho khách hàng?"

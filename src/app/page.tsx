@@ -16,7 +16,7 @@ export default function HomePage() {
       <div className="page-glow" aria-hidden />
       <SiteHeader />
       <main id="top" className="relative z-10 flex-1">
-        <Hero shot="/mockups/mock-chat.png" />
+        <Hero shot="/screens/04-chat-reply.webp" />
         <Marquee />
         <Features />
         <How />
