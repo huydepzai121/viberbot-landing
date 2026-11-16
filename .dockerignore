@@ -1,0 +1,17 @@
+.git
+.github
+.gitignore
+.next
+node_modules
+downloads
+*.AppImage
+*.dmg
+*.msix
+*.zip
+legacy
+docs
+preview.png
+preview-mobile.png
+AGENTS.md
+*.md
+!package.json

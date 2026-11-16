@@ -2,7 +2,7 @@ import { ArrowRight, BookOpen } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LatestVersion } from "@/components/latest-version";
-import { DOCS_URL, RELEASES } from "@/lib/site";
+import { DOCS_URL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function FinalCta() {
@@ -49,7 +49,6 @@ export function SiteFooter({ version }: { version: string }) {
       l: [
         ["Hướng dẫn sử dụng", DOCS_URL],
         ["Câu hỏi thường gặp", "#faq"],
-        ["Ghi chú phát hành", RELEASES],
       ],
     },
   ];

@@ -55,3 +55,10 @@ legacy/assets/demos/01-*
 legacy/assets/demos/ui-*
 legacy/assets/reference/get-viber-vn-source.html
 AGENTS.md
+
+# installer binaries — served from the VPS volume, never commit
+downloads/*
+!downloads/.gitkeep
+*.AppImage
+*.dmg
+*.msix

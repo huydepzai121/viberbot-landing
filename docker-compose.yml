@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    image: viberbot-landing:latest
+    container_name: viberbot-landing
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-8083}:80"
+    volumes:
+      - ./downloads:/data/downloads
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s

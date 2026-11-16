@@ -23,7 +23,7 @@
     "primary": {
       "type": "button",
       "label": "Tải ứng dụng",
-      "href": "https://get.viber.vn"
+      "href": "/#download"
     }
   },
   "navigation": {
