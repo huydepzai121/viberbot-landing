@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchLatestVersion } from "@/lib/release";
+import { fetchLatestVersion, newest } from "@/lib/release";
 
 const CACHE_KEY = "vibervn-latest-version";
 const CACHE_MS = 60 * 60 * 1000;
@@ -42,7 +42,7 @@ export function LatestVersion({ initial }: { initial: string }) {
   useEffect(() => {
     let live = true;
     latest().then((v) => {
-      if (live && v) setVersion(v);
+      if (live && v) setVersion((current) => newest(current, v) ?? current);
     });
     return () => {
       live = false;
