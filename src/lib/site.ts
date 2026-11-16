@@ -1,7 +1,8 @@
 /** Shown until the live release is known: at build time it is replaced by the version
  *  read from GitHub, and in the browser by a fresh read, so a new release shows up
- *  without editing this file. Bump it only to keep the no-network fallback close. */
-export const FALLBACK_VERSION = "0.6.0";
+ *  without editing this file. It is also the floor: a lagging releases mirror never shows
+ *  an older version, so bump it with each release. */
+export const FALLBACK_VERSION = "0.8.0";
 export const RELEASES = "https://github.com/nullmastermind/vibervn-bot-releases/releases";
 export const LATEST_RELEASE_API =
   "https://api.github.com/repos/nullmastermind/vibervn-bot-releases/releases/latest";
