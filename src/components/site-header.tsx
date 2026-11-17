@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "#features", label: "Tính năng" },
+  { href: "#computer", label: "Máy tính" },
   { href: "#how", label: "Cách dùng" },
   { href: "#channels", label: "Nhắn tin" },
   { href: "#pricing", label: "Bảng giá" },

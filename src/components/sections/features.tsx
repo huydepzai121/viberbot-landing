@@ -72,7 +72,7 @@ function ComputerDemo() {
     <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-black/30">
       <div className="flex items-center gap-2 border-b border-white/[0.06] px-3 py-2 text-[11px] text-muted-foreground">
         <span className="rounded bg-white/[0.06] px-2 py-0.5">Máy tính</span>
-        <span className="truncate">trang đặt lịch · đang điền biểu mẫu</span>
+        <span className="truncate">sandbox Docker · đang điền biểu mẫu</span>
       </div>
       <div className="relative m-3 rounded-lg border-2 border-rose-400/70 p-3">
         <span className="absolute -top-2.5 left-3 rounded bg-rose-500 px-1.5 text-[10px] font-semibold text-white">
@@ -170,7 +170,7 @@ export function Features() {
             className="md:col-span-2"
             icon={<MonitorPlay className="size-5" />}
             title="Xem bot dùng máy tính"
-            desc="Tab Máy tính cho bạn xem bot thao tác trên trình duyệt, giành quyền điều khiển bất cứ lúc nào, hoặc làm mẫu để bot học."
+            desc="Tab Máy tính cho bạn xem bot làm việc trên máy của bạn hoặc trong sandbox Docker, tiếp quản bất cứ lúc nào, hoặc làm mẫu để bot học."
           >
             <ComputerDemo />
           </Tile>

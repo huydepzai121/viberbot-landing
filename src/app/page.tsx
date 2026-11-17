@@ -3,6 +3,7 @@ import { FaqSection } from "@/components/faq-section";
 import { Hero } from "@/components/sections/hero";
 import { Marquee } from "@/components/sections/marquee";
 import { Features } from "@/components/sections/features";
+import { Computer } from "@/components/sections/computer";
 import { How } from "@/components/sections/how";
 import { Channels } from "@/components/sections/channels";
 import { DownloadSection } from "@/components/sections/download";
@@ -21,6 +22,7 @@ export default async function HomePage() {
         <Hero shot="/screens/04-chat-reply.webp" version={version} />
         <Marquee />
         <Features />
+        <Computer />
         <How />
         <Channels />
         <DownloadSection version={version} />
