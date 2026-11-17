@@ -110,7 +110,7 @@ function ComputerPane() {
           {sandbox ? (
             <>
               {/* The bot's own desktop: a browser window over a dark dock */}
-              <div className="absolute inset-x-[7%] top-[8%] bottom-[22%] overflow-hidden rounded-lg border border-white/10 bg-[#10141c] shadow-2xl">
+              <div className="absolute inset-x-[7%] top-[6%] bottom-[33%] overflow-hidden rounded-lg border border-white/10 bg-[#10141c] shadow-2xl">
                 <div className="flex items-center gap-1.5 border-b border-white/[0.06] px-2.5 py-1.5">
                   <span className="size-1.5 rounded-full bg-rose-400/70" />
                   <span className="size-1.5 rounded-full bg-amber-300/70" />
@@ -124,7 +124,7 @@ function ComputerPane() {
                   <div className="h-5 w-20 rounded bg-emerald-400/30" />
                 </div>
               </div>
-              <div className="absolute bottom-[5%] left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-xl border border-white/10 bg-black/50 px-2 py-1.5">
+              <div className="absolute bottom-[19%] left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-xl border border-white/10 bg-black/50 px-2 py-1.5">
                 {["bg-emerald-400/50", "bg-sky-400/50", "bg-amber-300/50", "bg-white/25"].map((c) => (
                   <span key={c} className={cn("size-3.5 rounded", c)} />
                 ))}
