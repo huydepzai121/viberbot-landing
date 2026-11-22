@@ -31,21 +31,38 @@ Remote gateway cho phép ứng dụng desktop đăng nhập vào một **ViberVN
   <Step title="Kiểm tra Cài đặt">
     Vào **Cài đặt → Model → Model chính**. Trang phải tải được danh sách model (không còn báo “Tải cài đặt thất bại”). Nếu chưa có khóa mô hình, đặt khóa của bạn trên Host (mỗi người dùng có khóa riêng).
   </Step>
-  <Step title="Đăng ký máy tính (SSH)">
-    Host **không chạy sandbox Docker** trên máy chủ. Máy thực thi là máy bạn đăng ký (máy tính, VM hoặc VPS riêng) qua SSH. Đăng ký trong trang quản trị hoặc **Cài đặt → Terminal**, rồi chọn backend **SSH**.
+  <Step title="Chọn nơi máy tính chạy">
+    Sau khi đăng nhập, mở phần **Máy tính của bot** và chọn một trong các chế độ:
+
+    | Chế độ | Máy chạy ở đâu | Tắt PC thì sao? |
+    |---|---|---|
+    | **Sandbox trên Host / VPS** (Local VM khi đang nối Remote gateway) | Container Docker trên VPS Host | **Vẫn chạy.** Bot, phiên, lịch tự động và máy tính tiếp tục trên Host. Ứng dụng desktop chỉ là client, mở lại là thấy trạng thái mới. |
+    | **SSH / Cloud / VPS của bạn** | Máy hoặc container bạn đăng ký qua SSH | Dừng khi máy đó tắt. |
+    | **PC của bạn / Local VM trên máy bạn** | Máy đang mở ứng dụng | Dừng khi tắt máy hoặc đóng app. |
+
+    Image sandbox (`vibervnbot-sandbox:desktop`) có môi trường desktop (trình quản lý file, Chromium/Chrome, terminal) cho chế độ Docker.
   </Step>
 </Steps>
 
 <Tip>
-  Đăng nhập dùng cookie phiên `vibervnbot_session_at` trên HTTPS. Nếu cửa sổ đăng nhập hiện JSON `{"detail": "Not Found"}`, Host chưa có trang `/login` — cần bản Host v0.2.0 trở lên.
+  Đăng nhập dùng cookie phiên `vibervnbot_session_at` trên HTTPS. Nếu cửa sổ đăng nhập hiện JSON `{"detail": "Not Found"}`, Host chưa có trang `/login` — cần bản Host v0.2.0 trở lên. Sandbox trên Host (chạy khi tắt máy) cần Host **v0.3.0** trở lên.
 </Tip>
 
 ## Máy tính chạy ở đâu?
 
-| Lựa chọn trên desktop | Trên Host |
-|---|---|
-| SSH / Cloud 24/7 | Dùng máy bạn đã đăng ký. Cần host, user và khóa SSH. |
-| Local VM (Docker) | Không khả dụng. Host không gắn docker socket. |
-| This device | Không dùng chính VPS Host làm máy của mọi người dùng. |
+| Lựa chọn | Hành vi | Tắt PC |
+|---|---|---|
+| Sandbox trên Host / VPS (Docker) | Container biệt lập trên VPS, image desktop (file manager, Chrome, terminal) | Vẫn chạy |
+| SSH / Cloud 24/7 | Máy bạn đã đăng ký (host, user, khóa) | Dừng khi máy đó tắt |
+| VPS (SSH) + container | Container Docker trên máy chủ của bạn, cùng image Local VM | Dừng khi máy chủ đó tắt |
+| PC / Local VM trên máy bạn | Máy đang mở app | Dừng khi tắt máy |
+| This device trên Host | Không dùng — đó là hệ điều hành dùng chung của VPS | — |
 
 Xem thêm [Trang quản trị](/cai-dat-va-thiet-lap/trang-quan-tri) và [Khắc phục sự cố](/khac-phuc-su-co).
+
+
+## Vẫn dùng hoàn toàn trên máy bạn (Local gateway)
+
+Bạn không bắt buộc phải dùng Host. Trong **Cài đặt → Gateway**, chọn **Local** (không nhập Remote URL). Ứng dụng chạy backend ngay trên máy bạn như trước: chat, Local VM (Docker trên máy bạn), PC này, lịch tự động — tất cả ở local, không cần `host.codefuel.space`. Tắt máy thì bot local dừng, đúng như bản desktop thông thường.
+
+Remote gateway chỉ là thêm lựa chọn khi bạn muốn bot chạy trên VPS lúc tắt máy.

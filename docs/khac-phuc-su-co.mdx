@@ -47,7 +47,10 @@ icon: "wrench"
     Ở chế độ Remote gateway, ứng dụng gọi `/api/config` và `/api/model/*` trên Host. Bản Host cũ thiếu các API này. Cập nhật Host lên v0.2.0, đăng nhập lại, rồi bấm tải lại. Mỗi người dùng đặt khóa mô hình của riêng mình trên Host.
   </Accordion>
   <Accordion title="Không đổi được nơi chạy máy tính / sandbox không khởi động">
-    Host không chạy sandbox Docker trên máy chủ (không gắn docker socket). Đừng chọn Local VM trên Remote gateway. Hãy đăng ký máy của bạn bằng SSH trong [trang quản trị](/cai-dat-va-thiet-lap/trang-quan-tri) hoặc Cài đặt → Terminal, rồi chọn backend SSH.
+    Cần Host **v0.3.0** trở lên để dùng sandbox Docker trên VPS. Chọn **Sandbox trên Host / VPS** (Local VM khi đang nối Remote gateway). Image phải có trên VPS (`vibervnbot-sandbox:desktop`). Chế độ này **vẫn chạy khi bạn tắt PC**. Nếu bạn chọn SSH hoặc PC/Local VM trên máy bạn, bot sẽ dừng khi máy đó tắt — đó là đúng hành vi, không phải lỗi.
+  </Accordion>
+  <Accordion title="Dùng Host nhưng tắt máy thì bot có còn chạy?">
+    Có, nếu máy tính của bot đang ở chế độ **sandbox trên Host/VPS**. Agent, phiên chat, lịch tự động (cron) và container đều chạy trên VPS; ứng dụng desktop chỉ cần mở lại để xem. Nếu đang chọn SSH hoặc PC/Local VM trên máy bạn thì tắt máy sẽ dừng chế độ đó.
   </Accordion>
   <Accordion title="Bị chặn bởi trang web khi bot dùng trình duyệt">
     Một số trang chặn trình duyệt tự động. Mở **Xem máy tính**, bấm **Nhấp để điều khiển** để tự vượt bước kiểm tra, rồi **Trả quyền điều khiển** cho bot.
