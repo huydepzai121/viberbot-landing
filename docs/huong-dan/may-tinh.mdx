@@ -1,26 +1,49 @@
 ---
 title: "Máy tính của bot"
-description: "Xem bot dùng trình duyệt, giành quyền điều khiển khi cần và dạy bot bằng cách làm mẫu."
+description: "Cùng một giao diện máy tính cho Local VM, sandbox trên VPS và PC của bạn. Local VM có desktop đủ dùng: trình quản lý file, Chrome và terminal."
 icon: "display"
 ---
 
-Khi một việc cần dùng web (tra cứu, điền biểu mẫu, đặt lịch…), bot tự mở trình duyệt riêng của nó. Bạn có thể xem trực tiếp và can thiệp bất cứ lúc nào.
+Giao diện **Máy tính** trong ứng dụng đã ổn định: bạn xem màn hình của bot, giành quyền điều khiển khi cần, và dạy bot bằng cách làm mẫu. Trang này giải thích máy đó chạy ở đâu — Local VM, sandbox trên VPS Host, hoặc chính PC của bạn — và khi nào bot vẫn chạy lúc bạn tắt máy.
 
-<Frame caption="Khung Máy tính ở bên phải cuộc trò chuyện">
-  <img src="/images/09-computer-pane.png" alt="Khung Máy tính hiện trang web bot vừa mở" />
+<Frame caption="Khung Máy tính trong ứng dụng — xem trang bot vừa mở, giành quyền điều khiển khi cần">
+  <img src="/images/09-computer-pane.png" alt="Khung Máy tính ở bên phải cuộc trò chuyện, hiện trang web bot đang mở" />
 </Frame>
 
-## Xem bot làm việc
+## Ba nơi máy tính có thể chạy
 
-Bấm biểu tượng màn hình (**Xem máy tính**) ở góc trên cuộc trò chuyện. Tab **Máy tính** ở khung bên phải hiện đúng trang bot đang mở, kèm thanh địa chỉ. Khi bot dùng trình duyệt trong một câu trả lời, ảnh chụp tab cũng hiện dưới tin nhắn để bạn kiểm tra lại.
+| Nơi chạy | Đó là gì | Tắt PC / đóng app thì sao? |
+|---|---|---|
+| **Local VM** | Container Docker trên **máy bạn**, image desktop đầy đủ (trình quản lý file Thunar, Google Chrome, terminal). Dùng khi app ở chế độ **Local gateway**, hoặc khi bạn chọn chạy VM trên máy mình. | **Dừng.** Cần máy bật và app/Docker trên máy bạn. |
+| **Sandbox trên Host / VPS** | Cùng image desktop, nhưng container nằm trên VPS (`host.codefuel.space`). Chọn khi đang nối **Remote gateway**. | **Vẫn chạy.** Bot, phiên chat, lịch tự động và máy tính tiếp tục trên Host. Mở lại app chỉ để xem và điều khiển. |
+| **PC của bạn** | Bot dùng chính máy đang mở ứng dụng (trình duyệt / màn hình của thiết bị này). | **Dừng** khi tắt máy hoặc đóng app. |
 
-## Giành quyền điều khiển
+Cùng một khung Máy tính trong app cho cả ba cách. Thay đổi chỗ chạy ở phần **Máy tính của bot** (hoặc Cài đặt → Terminal).
 
-Một số bước nên để bạn tự làm, như đăng nhập, nhập mã OTP hay xác nhận thanh toán.
+Xem thêm [Kết nối Remote gateway](/cai-dat-va-thiet-lap/ket-noi-host) nếu bạn dùng Host, và cách [vẫn dùng Local gateway](/cai-dat-va-thiet-lap/ket-noi-host#local-gateway) như trước, không cần Host.
+
+## Local VM và sandbox trên VPS: desktop đủ dùng
+
+Local VM và sandbox trên Host dùng chung image `vibervnbot-sandbox:desktop`. Bên trong có môi trường đồ họa:
+
+- Trình quản lý file **Thunar**
+- **Google Chrome**
+- **Terminal** (xfce4-terminal)
+- Thanh dock (Plank) để mở nhanh các ứng dụng đó
+
+Khác nhau chỉ ở chỗ container chạy: máy bạn (Local VM) hay VPS Host (vẫn chạy khi tắt máy).
+
+<Frame caption="Ảnh test thật: desktop trong sandbox (Thunar, Chrome trên dock, cửa sổ Terminal)">
+  <img src="/images/35-sandbox-desktop.png" alt="Màn hình desktop của sandbox: cửa sổ Terminal, trình quản lý file Thunar và biểu tượng Chrome trên dock" />
+</Frame>
+
+## PC của bạn: xem và giành quyền điều khiển
+
+Khi máy tính của bot đặt trên PC của bạn, khung Máy tính hiện đúng trang bot đang mở. Một số bước nên để bạn tự làm (đăng nhập, OTP, thanh toán).
 
 <Steps>
   <Step title="Bấm vào khung trình duyệt">
-    Chọn **Nhấp để điều khiển** ở dưới khung. Khung báo **Bạn đang điều khiển** và bot chờ bạn.
+    Chọn **Nhấp để điều khiển**. Khung báo **Bạn đang điều khiển** và bot chờ bạn.
   </Step>
   <Step title="Tự làm bước đó">
     Đăng nhập, gõ mã, bấm xác nhận như trên trình duyệt bình thường.
@@ -30,8 +53,8 @@ Một số bước nên để bạn tự làm, như đăng nhập, nhập mã OT
   </Step>
 </Steps>
 
-<Frame caption="Đang điều khiển: bấm Trả lại cho bot khi xong">
-  <img src="/images/10-computer-take-control.png" alt="Bạn đang tự điều khiển trình duyệt của bot" />
+<Frame caption="Bạn đang tự điều khiển trình duyệt của bot — bấm Trả lại cho bot khi xong">
+  <img src="/images/10-computer-take-control.png" alt="Khung Máy tính ở trạng thái Bạn đang điều khiển, có nút Trả lại cho bot" />
 </Frame>
 
 <Note>
@@ -40,20 +63,22 @@ Bot nhớ đăng nhập trong trình duyệt riêng của nó giữa các lần 
 
 ## Dạy bot một việc bằng cách làm mẫu
 
-Có việc bạn làm đi làm lại trên web? Hãy làm mẫu một lần để bot học.
-
 <Steps>
   <Step title="Mở chế độ dạy">
-    Trong khung **Máy tính**, chọn **Dạy một tác vụ**, ghi chú ngắn bạn sắp dạy việc gì (không bắt buộc) rồi bấm **Bắt đầu**.
+    Trong khung **Máy tính**, chọn **Dạy một tác vụ**, ghi chú ngắn (không bắt buộc) rồi bấm **Bắt đầu**.
   </Step>
   <Step title="Làm mẫu">
-    Bạn tự thao tác trong khung trình duyệt. Mọi cú nhấp, gõ phím và chuyển trang được ghi lại kèm ảnh. Mật khẩu, mã OTP và số thẻ được ghi ở dạng ẩn.
+    Tự thao tác trong khung. Mọi cú nhấp, gõ phím và chuyển trang được ghi lại kèm ảnh. Mật khẩu, mã OTP và số thẻ được ghi ở dạng ẩn.
   </Step>
   <Step title="Kết thúc">
-    Bấm **Dừng**. Bot biến bản ghi thành một **kỹ năng** đã lưu và báo cho bạn tên kỹ năng. Lần sau chỉ cần nhắn “làm việc X như mình đã dạy”.
+    Bấm **Dừng**. Bot lưu thành một **kỹ năng**. Lần sau chỉ cần nhắn “làm việc X như mình đã dạy”.
   </Step>
 </Steps>
 
+## Local gateway vẫn như cũ
+
+Bạn không bắt buộc phải dùng Host. Trong **Cài đặt → Gateway**, chọn **Local**: chat, Local VM, PC này và lịch tự động chạy hết trên máy bạn như trước, không cần `host.codefuel.space`. Tắt máy thì bot local dừng — đúng hành vi của bản desktop thông thường.
+
 ## Khi trang web chặn trình duyệt của bot
 
-Một số trang chặn trình duyệt tự động. Nếu bạn bật tuỳ chọn tương ứng trong **Cài đặt**, bot có thể chuyển sang trình duyệt thật trên máy (Chrome hoặc Edge) và khung Xem máy tính sẽ ghi rõ điều đó. Tuỳ chọn này mặc định tắt.
+Một số trang chặn trình duyệt tự động. Nếu bạn bật tuỳ chọn tương ứng trong **Cài đặt**, bot có thể chuyển sang trình duyệt thật trên máy (Chrome hoặc Edge). Tuỳ chọn này mặc định tắt.

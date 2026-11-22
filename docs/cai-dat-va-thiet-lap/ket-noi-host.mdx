@@ -58,10 +58,17 @@ Remote gateway cho phép ứng dụng desktop đăng nhập vào một **ViberVN
 | PC / Local VM trên máy bạn | Máy đang mở app | Dừng khi tắt máy |
 | This device trên Host | Không dùng — đó là hệ điều hành dùng chung của VPS | — |
 
+
+<Frame caption="Ảnh test thật: desktop trong sandbox trên Host — Thunar, Chrome trên dock, Terminal">
+  <img src="/images/35-sandbox-desktop.png" alt="Desktop sandbox với cửa sổ Terminal, trình quản lý file Thunar và biểu tượng Chrome trên dock" />
+</Frame>
+
+Chi tiết giao diện máy tính, Local VM, sandbox trên VPS và PC của bạn nằm ở [Máy tính của bot](/huong-dan/may-tinh).
+
 Xem thêm [Trang quản trị](/cai-dat-va-thiet-lap/trang-quan-tri) và [Khắc phục sự cố](/khac-phuc-su-co).
 
 
-## Vẫn dùng hoàn toàn trên máy bạn (Local gateway)
+## Vẫn dùng hoàn toàn trên máy bạn (Local gateway) {#local-gateway}
 
 Bạn không bắt buộc phải dùng Host. Trong **Cài đặt → Gateway**, chọn **Local** (không nhập Remote URL). Ứng dụng chạy backend ngay trên máy bạn như trước: chat, Local VM (Docker trên máy bạn), PC này, lịch tự động — tất cả ở local, không cần `host.codefuel.space`. Tắt máy thì bot local dừng, đúng như bản desktop thông thường.
 
