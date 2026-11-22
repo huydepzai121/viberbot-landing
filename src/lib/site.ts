@@ -9,6 +9,20 @@ export const MANIFEST_URL = "/downloads/latest.json";
  * Stable download aliases. nginx 302s each one to the current filename
  * listed in the manifest (so a version bump does not require a rebuild).
  */
+/** Tracker paths: the stats service increments then 302s to the real file. */
+export const DOWNLOAD_CLICK = {
+  windows: "/dl/windows",
+  windowsCert: "/dl/windows-cert",
+  macArm64: "/dl/mac-arm64",
+  macX64: "/dl/mac-x64",
+  macArm64Zip: "/dl/mac-arm64-zip",
+  macX64Zip: "/dl/mac-x64-zip",
+  linuxX64: "/dl/linux-x64",
+  linuxArm64: "/dl/linux-arm64",
+} as const;
+
+export const DOWNLOAD_STATS_URL = "/api/download-stats";
+
 export const DOWNLOADS = {
   windows: "/downloads/windows",
   windowsCert: "/downloads/windows-cert",

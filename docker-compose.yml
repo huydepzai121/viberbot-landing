@@ -8,9 +8,31 @@ services:
       - "${HOST_PORT:-8083}:80"
     volumes:
       - ./downloads:/data/downloads
+      - ./docs-site:/data/docs:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./out:/usr/share/nginx/html:ro
+    depends_on:
+      - stats
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 10s
+
+  stats:
+    build: ./download-stats
+    image: viberbot-download-stats:latest
+    container_name: viberbot-download-stats
+    restart: unless-stopped
+    volumes:
+      - ./data/download-stats:/data
+      - ./downloads/latest.json:/data/latest.json:ro
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 5s

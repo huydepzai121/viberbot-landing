@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Apple, Download as DownloadIcon, Monitor, Terminal } from "lucide-react";
 import { InstallTabs } from "@/components/install-tabs";
 import { LatestVersion } from "@/components/latest-version";
-import { DOWNLOADS } from "@/lib/site";
+import { DOWNLOAD_CLICK, DOWNLOAD_STATS_URL, DOWNLOADS } from "@/lib/site";
 import { fetchLatestManifest, formatBytes, type DownloadManifest } from "@/lib/release";
 import { SectionHead } from "./section-head";
 
@@ -16,8 +16,8 @@ const platforms = [
     title: "Windows 11",
     note: "x64 · 22H2 trở lên",
     links: [
-      { id: "windows", label: "Bộ cài .msix", badge: "x64", href: DOWNLOADS.windows },
-      { id: "windows-cert", label: "Chứng chỉ ViberVN-signing.cer", badge: "cert", href: DOWNLOADS.windowsCert },
+      { id: "windows", label: "Bộ cài .msix", badge: "x64", href: DOWNLOAD_CLICK.windows },
+      { id: "windows-cert", label: "Chứng chỉ ViberVN-signing.cer", badge: "cert", href: DOWNLOAD_CLICK.windowsCert },
     ] satisfies Link[],
   },
   {
@@ -25,10 +25,10 @@ const platforms = [
     title: "macOS 13+",
     note: "Apple Silicon hoặc Intel",
     links: [
-      { id: "mac-arm64", label: "Bộ cài .dmg", badge: "Apple Silicon", href: DOWNLOADS.macArm64 },
-      { id: "mac-x64", label: "Bộ cài .dmg", badge: "Intel", href: DOWNLOADS.macX64 },
-      { id: "mac-arm64-zip", label: "Hoặc .zip", badge: "Apple Silicon", href: DOWNLOADS.macArm64Zip },
-      { id: "mac-x64-zip", label: "Hoặc .zip", badge: "Intel", href: DOWNLOADS.macX64Zip },
+      { id: "mac-arm64", label: "Bộ cài .dmg", badge: "Apple Silicon", href: DOWNLOAD_CLICK.macArm64 },
+      { id: "mac-x64", label: "Bộ cài .dmg", badge: "Intel", href: DOWNLOAD_CLICK.macX64 },
+      { id: "mac-arm64-zip", label: "Hoặc .zip", badge: "Apple Silicon", href: DOWNLOAD_CLICK.macArm64Zip },
+      { id: "mac-x64-zip", label: "Hoặc .zip", badge: "Intel", href: DOWNLOAD_CLICK.macX64Zip },
     ] satisfies Link[],
   },
   {
@@ -36,24 +36,49 @@ const platforms = [
     title: "Linux",
     note: "AppImage, chạy không cần cài",
     links: [
-      { id: "linux-x64", label: ".AppImage", badge: "x86_64", href: DOWNLOADS.linuxX64 },
-      { id: "linux-arm64", label: ".AppImage", badge: "arm64", href: DOWNLOADS.linuxArm64 },
+      { id: "linux-x64", label: ".AppImage", badge: "x86_64", href: DOWNLOAD_CLICK.linuxX64 },
+      { id: "linux-arm64", label: ".AppImage", badge: "arm64", href: DOWNLOAD_CLICK.linuxArm64 },
     ] satisfies Link[],
   },
 ];
 
 function resolveLink(link: Link, manifest: DownloadManifest | null): Link & { size?: number } {
   const file = manifest?.files.find((f) => f.id === link.id);
+  // Always go through /dl/<id> so the server-side counter runs once;
+  // the stats service then 302s to the real file.
   if (!file) return link;
   return {
     ...link,
-    href: file.href || file.alias || link.href,
     size: file.size,
   };
 }
 
+type DownloadStats = { total: number; byId: Record<string, number>; byPlatform: Record<string, number> };
+
+function useDownloadStats() {
+  const [stats, setStats] = useState<DownloadStats | null>(null);
+  useEffect(() => {
+    let live = true;
+    fetch(DOWNLOAD_STATS_URL)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((s) => {
+        if (live && s && typeof s.total === "number") setStats(s);
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, []);
+  return stats;
+}
+
+function formatLuotTai(n: number) {
+  return new Intl.NumberFormat("vi-VN").format(n);
+}
+
 export function DownloadSection({ version }: { version: string }) {
   const [manifest, setManifest] = useState<DownloadManifest | null>(null);
+  const stats = useDownloadStats();
 
   useEffect(() => {
     let live = true;
@@ -80,6 +105,17 @@ export function DownloadSection({ version }: { version: string }) {
           desc="Chọn bản cho hệ điều hành của bạn. Nhấn là tải trực tiếp bộ cài, không qua GitHub. Lần đầu mở, hệ điều hành có thể cảnh báo một lần; làm theo hướng dẫn ngay bên dưới."
           center
         />
+        {stats ? (
+          <p className="mb-8 text-center text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">{formatLuotTai(stats.total)}</span> lượt tải
+            <span className="mx-2 text-white/20">·</span>
+            Windows {formatLuotTai(stats.byPlatform.windows ?? 0)}
+            <span className="mx-1.5 text-white/20">·</span>
+            macOS {formatLuotTai(stats.byPlatform.macos ?? 0)}
+            <span className="mx-1.5 text-white/20">·</span>
+            Linux {formatLuotTai(stats.byPlatform.linux ?? 0)}
+          </p>
+        ) : null}
         <div className="grid gap-4 md:grid-cols-3">
           {platforms.map((p) => (
             <div key={p.title} className="glass card-hover rounded-3xl p-6">

@@ -7,6 +7,7 @@ import { Computer } from "@/components/sections/computer";
 import { How } from "@/components/sections/how";
 import { Channels } from "@/components/sections/channels";
 import { DownloadSection } from "@/components/sections/download";
+import { IntroVideo } from "@/components/sections/intro-video";
 import { Pricing } from "@/components/sections/pricing";
 import { FinalCta, SiteFooter } from "@/components/sections/cta-footer";
 import { SectionHead } from "@/components/sections/section-head";
@@ -20,6 +21,7 @@ export default async function HomePage() {
       <SiteHeader />
       <main id="top" className="relative z-10 flex-1">
         <Hero shot="/screens/04-chat-reply.webp" version={version} />
+        <IntroVideo />
         <Marquee />
         <Features />
         <Computer />
