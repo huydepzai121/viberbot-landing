@@ -40,6 +40,15 @@ icon: "wrench"
   <Accordion title="Tự động hóa không chạy đúng giờ">
     Máy tính phải bật và không ngủ vào giờ chạy. Bật **Cài đặt → Nâng cao → Giữ máy tính thức**. Xem tab **Lượt chạy** trong Tự động hóa để biết lần chạy gần nhất bị lỗi gì. Nếu bạn đặt giờ yên tĩnh, việc trong khoảng đó sẽ chạy khi hết giờ.
   </Accordion>
+  <Accordion title="Cửa sổ đăng nhập Host hiện {\"detail\": \"Not Found\"}">
+    Ứng dụng đang mở `https://…/login` nhưng Host chưa có trang đăng nhập. Cần ViberVN Host **v0.2.0** trở lên. Kiểm tra `https://host.codefuel.space/login` phải ra form tiếng Việt, không phải JSON lỗi.
+  </Accordion>
+  <Accordion title="Cài đặt → Model báo không tải được">
+    Ở chế độ Remote gateway, ứng dụng gọi `/api/config` và `/api/model/*` trên Host. Bản Host cũ thiếu các API này. Cập nhật Host lên v0.2.0, đăng nhập lại, rồi bấm tải lại. Mỗi người dùng đặt khóa mô hình của riêng mình trên Host.
+  </Accordion>
+  <Accordion title="Không đổi được nơi chạy máy tính / sandbox không khởi động">
+    Host không chạy sandbox Docker trên máy chủ (không gắn docker socket). Đừng chọn Local VM trên Remote gateway. Hãy đăng ký máy của bạn bằng SSH trong [trang quản trị](/cai-dat-va-thiet-lap/trang-quan-tri) hoặc Cài đặt → Terminal, rồi chọn backend SSH.
+  </Accordion>
   <Accordion title="Bị chặn bởi trang web khi bot dùng trình duyệt">
     Một số trang chặn trình duyệt tự động. Mở **Xem máy tính**, bấm **Nhấp để điều khiển** để tự vượt bước kiểm tra, rồi **Trả quyền điều khiển** cho bot.
   </Accordion>

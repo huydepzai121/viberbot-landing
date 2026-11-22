@@ -1,0 +1,51 @@
+---
+title: "Kết nối Remote gateway"
+description: "Kết nối ứng dụng desktop với ViberVN Host để bot chạy trên máy chủ, kể cả khi bạn đóng ứng dụng."
+icon: "cloud"
+---
+
+Remote gateway cho phép ứng dụng desktop đăng nhập vào một **ViberVN Host** (ví dụ [host.codefuel.space](https://host.codefuel.space)) thay vì chỉ chạy bot trên máy của bạn. Chat, mô hình, lịch tự động và kênh nhắn tin tiếp tục chạy trên Host.
+
+<Frame caption="Cửa sổ đăng nhập Host — Sign in to ViberVN Bot gateway">
+  <img src="/images/32-host-login.png" alt="Trang đăng nhập ViberVN Host, tiêu đề Đăng nhập ViberVN Host" />
+</Frame>
+
+## Bạn cần gì?
+
+- Ứng dụng ViberVN Bot bản mới nhất (tải ở [trang chủ](/#download)).
+- Địa chỉ Host, ví dụ `https://host.codefuel.space`.
+- Tài khoản trên Host (quản trị viên tạo ở [trang quản trị](/cai-dat-va-thiet-lap/trang-quan-tri), hoặc bạn nhận mã mời).
+
+## Các bước kết nối
+
+<Steps>
+  <Step title="Mở ứng dụng và chọn Remote gateway">
+    Trong phần kết nối, chọn chế độ **Remote gateway** (không dùng máy cục bộ).
+  </Step>
+  <Step title="Nhập Remote URL">
+    Điền đúng địa chỉ Host, gồm `https://`, không thêm dấu `/` thừa ở cuối nếu ứng dụng tự chuẩn hoá. Ví dụ: `https://host.codefuel.space`.
+  </Step>
+  <Step title="Đăng nhập">
+    Bấm **Sign in with your identity provider** (hoặc nút đăng nhập tương đương). Cửa sổ **Sign in to ViberVN Bot gateway** mở trang `/login` của Host. Nhập tên đăng nhập và mật khẩu, rồi bấm **Đăng nhập**.
+  </Step>
+  <Step title="Kiểm tra Cài đặt">
+    Vào **Cài đặt → Model → Model chính**. Trang phải tải được danh sách model (không còn báo “Tải cài đặt thất bại”). Nếu chưa có khóa mô hình, đặt khóa của bạn trên Host (mỗi người dùng có khóa riêng).
+  </Step>
+  <Step title="Đăng ký máy tính (SSH)">
+    Host **không chạy sandbox Docker** trên máy chủ. Máy thực thi là máy bạn đăng ký (máy tính, VM hoặc VPS riêng) qua SSH. Đăng ký trong trang quản trị hoặc **Cài đặt → Terminal**, rồi chọn backend **SSH**.
+  </Step>
+</Steps>
+
+<Tip>
+  Đăng nhập dùng cookie phiên `vibervnbot_session_at` trên HTTPS. Nếu cửa sổ đăng nhập hiện JSON `{"detail": "Not Found"}`, Host chưa có trang `/login` — cần bản Host v0.2.0 trở lên.
+</Tip>
+
+## Máy tính chạy ở đâu?
+
+| Lựa chọn trên desktop | Trên Host |
+|---|---|
+| SSH / Cloud 24/7 | Dùng máy bạn đã đăng ký. Cần host, user và khóa SSH. |
+| Local VM (Docker) | Không khả dụng. Host không gắn docker socket. |
+| This device | Không dùng chính VPS Host làm máy của mọi người dùng. |
+
+Xem thêm [Trang quản trị](/cai-dat-va-thiet-lap/trang-quan-tri) và [Khắc phục sự cố](/khac-phuc-su-co).

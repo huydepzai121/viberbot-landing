@@ -1,0 +1,50 @@
+---
+title: "Trang quản trị Host"
+description: "Đăng nhập trang quản trị để tạo người dùng, mã mời và xem máy đã đăng ký."
+icon: "shield"
+---
+
+Trang quản trị của ViberVN Host cho phép admin tạo tài khoản, phát mã mời, khóa/mở người dùng và xem thông tin máy SSH đã đăng ký.
+
+- Địa chỉ: [https://host.codefuel.space/admin](https://host.codefuel.space/admin)
+- Đăng nhập trước tại [https://host.codefuel.space/login](https://host.codefuel.space/login)
+
+<Frame caption="Trang quản trị ViberVN Host sau khi đăng nhập bằng tài khoản admin">
+  <img src="/images/33-host-admin.png" alt="Trang quản trị với danh sách người dùng, mã mời và hướng dẫn kết nối desktop" />
+</Frame>
+
+## Đăng nhập
+
+1. Mở `/login`.
+2. Nhập tên đăng nhập và mật khẩu admin.
+3. Bạn sẽ vào `/admin` (hoặc trang “Đã đăng nhập” rồi bấm **Mở trang quản trị**).
+
+<Frame caption="Trang xác nhận đã đăng nhập">
+  <img src="/images/34-host-signed-in.png" alt="Trang Đã đăng nhập, có liên kết tới trang quản trị" />
+</Frame>
+
+Chỉ tài khoản vai trò **admin** mới vào được `/admin`. Tài khoản thường sẽ thấy thông báo không có quyền.
+
+## Việc admin làm được
+
+- **Người dùng:** xem danh sách, tạo tài khoản (user hoặc admin), khóa hoặc mở khóa.
+- **Mã mời:** tạo mã dùng một lần (mặc định 72 giờ). Mã chỉ hiện một lần khi tạo — gửi cho người mới để họ đăng ký.
+- **Kết nối desktop:** trang nhắc Remote URL và việc đăng ký máy SSH. Host không chạy sandbox Docker tại chỗ.
+
+## Tạo tài khoản từ dòng lệnh
+
+Trên máy chủ cài Host:
+
+```bash
+docker compose -f docker-compose.prod.yml exec host \
+  python -m vibervn_host.cli admin create-user --username tenban --role admin --password-file /run/pw
+```
+
+Đổi mật khẩu:
+
+```bash
+docker compose -f docker-compose.prod.yml exec host \
+  python -m vibervn_host.cli admin set-password --username tenban --password-file /run/pw
+```
+
+Mật khẩu tối thiểu 10 ký tự. Không đưa mật khẩu vào lệnh không có file, và không commit file mật khẩu.

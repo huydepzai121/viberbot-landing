@@ -62,3 +62,6 @@ downloads/*
 *.AppImage
 *.dmg
 *.msix
+
+# Mintlify static export (mint export --base-path /docs), deployed to the VPS
+docs-site/
