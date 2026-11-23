@@ -43,6 +43,26 @@ REMOTE=root@167.104.100.64:/opt/viberbot-landing/downloads scripts/sync-download
 `REPO` (default `huydepzai121/vibervn-bot`) and `TAG` (default: latest release)
 can be overridden.
 
+### Release feed (desktop auto-update)
+
+The desktop app (from the first build that ships auto-update, v0.9.4+) checks
+`https://viberbot.viber.vn/downloads/latest.json` at launch and every 6 hours,
+then downloads its installer **directly from the GitHub asset `href`** (not
+through `/dl/<id>`, so updates don't inflate install counts) and verifies the
+`sha256`. If the site is down it falls back to this repo's latest GitHub
+release. So the feed must only ever name a release whose assets are already
+uploaded to the public `huydepzai121/viberbot-landing` release.
+
+After uploading the assets of a new tag to the public release:
+
+```bash
+TAG=v0.9.4 scripts/publish-release-feed.py   # no downloads; hrefs + sha256 from GitHub
+# then put downloads/latest.json and downloads/nginx-aliases.conf on the VPS
+# (/opt/viberbot-landing/downloads) and reload nginx
+```
+
+The script refuses a release whose assets lack a GitHub sha256 digest.
+
 ## User guide (Mintlify)
 
 ```bash
