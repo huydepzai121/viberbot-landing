@@ -55,8 +55,8 @@ uploaded to the public `nthuy2810/viberbot-landing` release.
 
 Releases are built by `.github/workflows/release.yml` in this repo, not in the
 private source repo: standard runners are free on public repos. Push the tag
-`vX.Y.Z` to `nthuy2810/vibervn-bot`, then run **Actions → ViberVN Bot release**
-with that tag. It needs the secrets `SOURCE_REPO_TOKEN` (Contents: Read on the
+`vX.Y.Z` to `nthuy2810/vibervn-bot`, then push the same tag to this repo (or run
+**Actions → ViberVN Bot release** with that tag). It needs the secrets `SOURCE_REPO_TOKEN` (Contents: Read on the
 source repo), `WINDOWS_SIGN_PFX` and `WINDOWS_SIGN_PFX_PASSWORD`.
 
 After the release's assets are uploaded:

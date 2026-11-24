@@ -8,8 +8,10 @@ name: ViberVN Bot release
 # The source stays private: it is checked out with a read-only token and never
 # committed here. Build logs of this repo are public; secrets stay masked.
 #
-# Run: Actions -> ViberVN Bot release -> Run workflow, tag = vX.Y.Z. The tag must
-# already be pushed to the source repo and equal its pyproject.toml version.
+# Run: push the same tag vX.Y.Z to this repo (git push <remote> vX.Y.Z; it may
+# point at any commit here), or Actions -> ViberVN Bot release -> Run workflow
+# with tag = vX.Y.Z. The tag must already be pushed to the source repo and equal
+# its pyproject.toml version.
 # A failed leg does not hold back the others: publish attaches what was built,
 # and re-running the failed leg adds its files to the same release.
 #
@@ -19,6 +21,8 @@ name: ViberVN Bot release
 #   WINDOWS_SIGN_PFX_PASSWORD  its password
 
 on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
     inputs:
       tag:
@@ -30,12 +34,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: release-${{ inputs.tag }}
+  group: release-${{ inputs.tag || github.ref_name }}
   cancel-in-progress: false
 
 env:
   PYTHONUTF8: '1'
-  TAG: ${{ inputs.tag }}
+  TAG: ${{ inputs.tag || github.ref_name }}
   SOURCE_REPO: nthuy2810/vibervn-bot
 
 jobs:
@@ -98,7 +102,7 @@ jobs:
         uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
         with:
           repository: ${{ env.SOURCE_REPO }}
-          ref: refs/tags/${{ inputs.tag }}
+          ref: refs/tags/${{ env.TAG }}
           token: ${{ secrets.SOURCE_REPO_TOKEN }}
           fetch-depth: 0
           # Leave no token in .git/config for the build scripts to see.
@@ -234,6 +238,7 @@ jobs:
             gh release upload "$TAG" "${assets[@]}" --clobber
             gh release edit "$TAG" --notes-file notes.md
           else
-            # This repo holds no source: its tag points at its own default branch.
+            # This repo holds no source: its tag is the pushed one, or else is
+            # created at this repo's default branch.
             gh release create "$TAG" "${assets[@]}" --title "ViberVN Bot $TAG" --notes-file notes.md --latest
           fi
