@@ -5,8 +5,8 @@ name: ViberVN Bot release
 #
 # Why the build runs here: standard GitHub-hosted runners are free and unlimited
 # on public repositories, but billed per minute (macOS at ~10x) on private ones.
-# The source stays private: it is checked out with a read-only token and never
-# committed here. Build logs of this repo are public; secrets stay masked.
+# The source stays private: it is checked out with a read-only deploy key and
+# never committed here. Build logs of this repo are public; secrets stay masked.
 #
 # Run: push the same tag vX.Y.Z to this repo (git push <remote> vX.Y.Z; it may
 # point at any commit here), or Actions -> ViberVN Bot release -> Run workflow
@@ -16,7 +16,7 @@ name: ViberVN Bot release
 # and re-running the failed leg adds its files to the same release.
 #
 # Secrets (Settings -> Secrets and variables -> Actions):
-#   SOURCE_REPO_TOKEN          fine-grained token, Contents: Read on SOURCE_REPO
+#   SOURCE_DEPLOY_KEY          private half of a read-only deploy key of SOURCE_REPO
 #   WINDOWS_SIGN_PFX           base64 of the self-signed PFX that signs the MSIX
 #   WINDOWS_SIGN_PFX_PASSWORD  its password
 
@@ -35,7 +35,8 @@ permissions:
 
 concurrency:
   group: release-${{ inputs.tag || github.ref_name }}
-  cancel-in-progress: false
+  # A re-pushed tag supersedes a run still waiting for a runner.
+  cancel-in-progress: true
 
 env:
   PYTHONUTF8: '1'
@@ -103,9 +104,9 @@ jobs:
         with:
           repository: ${{ env.SOURCE_REPO }}
           ref: refs/tags/${{ env.TAG }}
-          token: ${{ secrets.SOURCE_REPO_TOKEN }}
+          ssh-key: ${{ secrets.SOURCE_DEPLOY_KEY }}
           fetch-depth: 0
-          # Leave no token in .git/config for the build scripts to see.
+          # Leave no key in .git/config for the build scripts to see.
           persist-credentials: false
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -197,6 +198,19 @@ jobs:
     if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
     steps:
+      # Only for the annotated tag's message (the changelog); a deploy key
+      # reaches git, not the REST API.
+      - name: Fetch the source tag
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: refs/tags/${{ env.TAG }}
+          ssh-key: ${{ secrets.SOURCE_DEPLOY_KEY }}
+          path: source
+          sparse-checkout: pyproject.toml
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: release-*
@@ -208,16 +222,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          SOURCE_TOKEN: ${{ secrets.SOURCE_REPO_TOKEN }}
         run: |
           shopt -s nullglob
           assets=(out/*)
           if [ ${#assets[@]} -eq 0 ]; then echo "::error::no leg produced an installer"; exit 1; fi
           ls -la out
           # The annotated tag's message in the source repo is the changelog.
-          tag_object=$(GH_TOKEN="$SOURCE_TOKEN" gh api "repos/$SOURCE_REPO/git/ref/tags/$TAG" --jq 'select(.object.type == "tag") | .object.sha')
-          if [ -n "$tag_object" ]; then
-            GH_TOKEN="$SOURCE_TOKEN" gh api "repos/$SOURCE_REPO/git/tags/$tag_object" --jq .message > notes.md
+          if [ "$(git -C source cat-file -t "refs/tags/$TAG" 2>/dev/null)" = tag ]; then
+            git -C source for-each-ref "refs/tags/$TAG" --format='%(contents)' > notes.md
             printf '\n## Install\n\n' >> notes.md
           fi
           cat >> notes.md <<EOF
