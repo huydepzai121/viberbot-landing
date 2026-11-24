@@ -40,7 +40,7 @@ scripts/sync-downloads.sh
 REMOTE=root@167.104.100.64:/opt/viberbot-landing/downloads scripts/sync-downloads.sh
 ```
 
-`REPO` (default `huydepzai121/vibervn-bot`) and `TAG` (default: latest release)
+`REPO` (default `nthuy2810/viberbot-landing`) and `TAG` (default: latest release)
 can be overridden.
 
 ### Release feed (desktop auto-update)
@@ -51,9 +51,15 @@ then downloads its installer **directly from the GitHub asset `href`** (not
 through `/dl/<id>`, so updates don't inflate install counts) and verifies the
 `sha256`. If the site is down it falls back to this repo's latest GitHub
 release. So the feed must only ever name a release whose assets are already
-uploaded to the public `huydepzai121/viberbot-landing` release.
+uploaded to the public `nthuy2810/viberbot-landing` release.
 
-After uploading the assets of a new tag to the public release:
+Releases are built by `.github/workflows/release.yml` in this repo, not in the
+private source repo: standard runners are free on public repos. Push the tag
+`vX.Y.Z` to `nthuy2810/vibervn-bot`, then run **Actions → ViberVN Bot release**
+with that tag. It needs the secrets `SOURCE_REPO_TOKEN` (Contents: Read on the
+source repo), `WINDOWS_SIGN_PFX` and `WINDOWS_SIGN_PFX_PASSWORD`.
+
+After the release's assets are uploaded:
 
 ```bash
 TAG=v0.9.4 scripts/publish-release-feed.py   # no downloads; hrefs + sha256 from GitHub

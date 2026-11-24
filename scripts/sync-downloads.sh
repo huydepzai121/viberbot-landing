@@ -8,7 +8,7 @@
 #   TAG=v0.8.0 REMOTE=root@167.104.100.64:/opt/viberbot-landing/downloads scripts/sync-downloads.sh
 #
 # Env:
-#   REPO    GitHub repo (default: huydepzai121/vibervn-bot)
+#   REPO    GitHub repo (default: nthuy2810/viberbot-landing)
 #   TAG     Release tag; empty means the latest release
 #   DEST    Local directory to write files into (default: <repo>/downloads)
 #   REMOTE  Optional rsync destination after a successful local sync
@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-REPO="${REPO:-huydepzai121/vibervn-bot}"
+REPO="${REPO:-nthuy2810/viberbot-landing}"
 TAG="${TAG:-}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"

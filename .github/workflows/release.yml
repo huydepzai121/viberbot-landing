@@ -1,0 +1,239 @@
+name: ViberVN Bot release
+
+# Builds the desktop installers from the PRIVATE source repo and publishes them
+# as a release of THIS public repo, where users download them.
+#
+# Why the build runs here: standard GitHub-hosted runners are free and unlimited
+# on public repositories, but billed per minute (macOS at ~10x) on private ones.
+# The source stays private: it is checked out with a read-only token and never
+# committed here. Build logs of this repo are public; secrets stay masked.
+#
+# Run: Actions -> ViberVN Bot release -> Run workflow, tag = vX.Y.Z. The tag must
+# already be pushed to the source repo and equal its pyproject.toml version.
+# A failed leg does not hold back the others: publish attaches what was built,
+# and re-running the failed leg adds its files to the same release.
+#
+# Secrets (Settings -> Secrets and variables -> Actions):
+#   SOURCE_REPO_TOKEN          fine-grained token, Contents: Read on SOURCE_REPO
+#   WINDOWS_SIGN_PFX           base64 of the self-signed PFX that signs the MSIX
+#   WINDOWS_SIGN_PFX_PASSWORD  its password
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag in the source repo (vX.Y.Z)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.tag }}
+  cancel-in-progress: false
+
+env:
+  PYTHONUTF8: '1'
+  TAG: ${{ inputs.tag }}
+  SOURCE_REPO: nthuy2810/vibervn-bot
+
+jobs:
+  build:
+    name: ${{ matrix.label }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { label: windows-x64, runner: windows-2025 }
+          - { label: macos-arm64, runner: macos-15 }
+          - { label: macos-x64, runner: macos-15-intel }
+          - { label: linux-x64, runner: ubuntu-24.04 }
+          - { label: linux-arm64, runner: ubuntu-24.04-arm }
+    steps:
+      - name: Validate the tag
+        shell: bash
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::tag '$TAG' is not vX.Y.Z"; exit 1; }
+
+      # Bytecode caches under elevenlabs' generated types exceed MAX_PATH.
+      - name: Enable long paths
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name LongPathsEnabled -Value 1 -PropertyType DWORD -Force | Out-Null
+          git config --system core.longpaths true
+
+      # The hosted x64 image leaves ~14 GB free, less than the payload copies
+      # electron-builder makes. Drop preinstalled SDKs the build never uses.
+      - name: Free disk space
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup \
+            /opt/hostedtoolcache/CodeQL /usr/share/swift \
+            /usr/local/share/chromium /usr/local/lib/node_modules || true
+          sudo docker image prune --all --force > /dev/null 2>&1 || true
+          df -h /
+
+      - name: Prepare macOS host
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          # Spotlight indexes the DMG staging image past hdiutil's detach retries.
+          sudo mdutil -a -i off || true
+          # actool >= 26 compiles the macOS 26 layered icon; without Xcode 26
+          # the build packages the .icns alone.
+          xcode="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
+          if [ -n "$xcode" ]; then
+            echo "DEVELOPER_DIR=$xcode/Contents/Developer" >> "$GITHUB_ENV"
+          else
+            echo "::warning::no Xcode 26 on this runner; packaging the legacy .icns only"
+          fi
+
+      - name: Check out the private source
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: refs/tags/${{ inputs.tag }}
+          token: ${{ secrets.SOURCE_REPO_TOKEN }}
+          fetch-depth: 0
+          # Leave no token in .git/config for the build scripts to see.
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+
+      - name: Admit the tag
+        shell: pwsh
+        run: |
+          $version = python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])"
+          if ("v$version" -ne $env:TAG) { throw "tag $env:TAG does not match pyproject.toml version $version" }
+          # GITHUB_SHA is this repo's commit; the build stamps the source commit.
+          $commit = git rev-parse HEAD
+          # Stable desktop preparation reads its release epoch from an annotated
+          # claim tag (rc.<N>-vX.Y.Z). It lives only in this checkout.
+          $claim = "rc.900-v$version"
+          git -c user.name=vibervnbot-release -c user.email=release@invalid -c tag.gpgSign=false `
+            tag -a $claim -m 'release claim' $commit
+          if ($LASTEXITCODE) { throw "could not create claim tag $claim" }
+          @(
+            "SOURCE_COMMIT=$commit"
+            "RELEASE_CLAIM_TAG=$claim"
+            "RELEASE_CLAIM_OBJECT=$(git rev-parse "refs/tags/$claim")"
+            "VIBERVNBOT_PAYLOAD_TAG=$env:TAG"
+            "VIBERVNBOT_PAYLOAD_VERSION=$version"
+          ) | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          python scripts/bundles/desktop.py --tag $env:TAG --release-commit $env:SOURCE_COMMIT --variant bundled
+          if ($LASTEXITCODE) { throw "desktop build failed (exit $LASTEXITCODE)" }
+
+      - name: Build (macOS, Linux)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          ulimit -n 16384 2>/dev/null || true
+          python scripts/bundles/desktop.py --tag "$TAG" --release-commit "$SOURCE_COMMIT" --variant bundled
+
+      - name: Sign the MSIX
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          WINDOWS_SIGN_PFX: ${{ secrets.WINDOWS_SIGN_PFX }}
+          WINDOWS_SIGN_PFX_PASSWORD: ${{ secrets.WINDOWS_SIGN_PFX_PASSWORD }}
+        run: |
+          if (-not $env:WINDOWS_SIGN_PFX) { throw 'WINDOWS_SIGN_PFX secret is not set' }
+          $pfx = Join-Path $env:RUNNER_TEMP 'sign.pfx'
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:WINDOWS_SIGN_PFX))
+          $msix = @(Get-ChildItem apps/desktop/release -Filter '*.msix')
+          if ($msix.Count -ne 1) { throw "expected one .msix, found $($msix.Count)" }
+          $signtool = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe' |
+            Sort-Object FullName -Descending | Select-Object -First 1
+          & $signtool.FullName sign /fd SHA256 /f $pfx /p $env:WINDOWS_SIGN_PFX_PASSWORD `
+            /tr http://timestamp.digicert.com /td SHA256 $msix[0].FullName
+          if ($LASTEXITCODE) { throw "signtool failed (exit $LASTEXITCODE)" }
+          $cert = [Security.Cryptography.X509Certificates.X509Certificate2]::new($pfx, $env:WINDOWS_SIGN_PFX_PASSWORD)
+          [IO.File]::WriteAllBytes((Join-Path 'apps/desktop/release' 'ViberVN-signing.cer'), $cert.Export('Cert'))
+          Remove-Item $pfx
+
+      - name: Collect installers
+        shell: pwsh
+        run: |
+          $out = Join-Path $env:RUNNER_TEMP 'out'
+          New-Item -ItemType Directory -Force $out | Out-Null
+          $files = @(Get-ChildItem apps/desktop/release -File |
+            Where-Object { $_.Extension -in '.msix', '.cer', '.dmg', '.zip', '.AppImage' })
+          if (-not $files) { throw 'the build produced no installer' }
+          foreach ($file in $files) {
+            '{0}  {1:N0} MB' -f $file.Name, ($file.Length / 1MB)
+            # GitHub rejects release assets of 2 GiB or more.
+            if ($file.Length -ge 2GB) { throw "$($file.Name) is over GitHub's 2 GiB release-asset limit" }
+            Move-Item $file.FullName $out
+          }
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-${{ matrix.label }}
+          path: ${{ runner.temp }}/out/*
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+
+  publish:
+    name: GitHub Release
+    needs: build
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: out
+
+      - name: Publish
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SOURCE_TOKEN: ${{ secrets.SOURCE_REPO_TOKEN }}
+        run: |
+          shopt -s nullglob
+          assets=(out/*)
+          if [ ${#assets[@]} -eq 0 ]; then echo "::error::no leg produced an installer"; exit 1; fi
+          ls -la out
+          # The annotated tag's message in the source repo is the changelog.
+          tag_object=$(GH_TOKEN="$SOURCE_TOKEN" gh api "repos/$SOURCE_REPO/git/ref/tags/$TAG" --jq 'select(.object.type == "tag") | .object.sha')
+          if [ -n "$tag_object" ]; then
+            GH_TOKEN="$SOURCE_TOKEN" gh api "repos/$SOURCE_REPO/git/tags/$tag_object" --jq .message > notes.md
+            printf '\n## Install\n\n' >> notes.md
+          fi
+          cat >> notes.md <<EOF
+          ViberVN Bot ${TAG}. The installers are not signed by a trusted publisher; each OS shows a warning you accept once.
+
+          **Windows 11 22H2+ (x64)**: download \`ViberVN-signing.cer\` and the \`.msix\`. Trust the certificate once, in PowerShell **as Administrator**:
+          \`Import-Certificate -FilePath .\ViberVN-signing.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople\`
+          then open the \`.msix\` and choose Install.
+
+          **macOS 13+**: \`arm64\` is Apple Silicon, \`x64\` is Intel. Open the \`.dmg\` and drag the app to Applications. macOS blocks it the first time: open System Settings → Privacy & Security → Open Anyway, or run
+          \`xattr -dr com.apple.quarantine "/Applications/ViberVN Bot.app"\`.
+          If it still reports the app as damaged, sign it locally once:
+          \`codesign --force --deep --sign - "/Applications/ViberVN Bot.app"\`.
+
+          **Linux**: \`chmod +x\` the \`.AppImage\` for your architecture and run it.
+          EOF
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" "${assets[@]}" --clobber
+            gh release edit "$TAG" --notes-file notes.md
+          else
+            # This repo holds no source: its tag points at its own default branch.
+            gh release create "$TAG" "${assets[@]}" --title "ViberVN Bot $TAG" --notes-file notes.md --latest
+          fi

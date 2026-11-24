@@ -11,7 +11,7 @@ Usage:
   scripts/publish-release-feed.py               # latest release of the public repo
   TAG=v0.9.4 scripts/publish-release-feed.py    # a specific tag
 Env:
-  REPO   public repo (default huydepzai121/viberbot-landing)
+  REPO   public repo (default nthuy2810/viberbot-landing)
   DEST   output dir (default <repo>/downloads)
   GITHUB_TOKEN  optional, only to lift the anonymous API rate limit
 """
@@ -24,7 +24,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-REPO = os.environ.get("REPO", "huydepzai121/viberbot-landing")
+REPO = os.environ.get("REPO", "nthuy2810/viberbot-landing")
 TAG = os.environ.get("TAG", "").strip()
 DEST = Path(os.environ.get("DEST", Path(__file__).resolve().parent.parent / "downloads"))
 
