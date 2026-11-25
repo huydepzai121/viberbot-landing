@@ -1,6 +1,6 @@
 /** Shown until /downloads/latest.json is known. Bump when shipping a new release
  *  so a stale or missing manifest never shows an older version. */
-export const FALLBACK_VERSION = "0.9.3";
+export const FALLBACK_VERSION = "0.9.5";
 
 /** Manifest written by scripts/sync-downloads.sh and served from the data volume. */
 export const MANIFEST_URL = "/downloads/latest.json";
