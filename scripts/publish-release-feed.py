@@ -93,12 +93,13 @@ def build(release: dict) -> dict:
 def main() -> None:
     manifest = build(fetch_release())
     DEST.mkdir(parents=True, exist_ok=True)
-    (DEST / "latest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
+    (DEST / "latest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+                                      encoding="utf-8", newline="\n")
     lines = [
         "# Generated for the public GitHub release — do not copy installer binaries to the VPS.",
         "# Stable aliases 302 to GitHub release assets.",
     ] + [f"location = {f['alias']} {{ return 302 {f['href']}; }}" for f in manifest["files"]]
-    (DEST / "nginx-aliases.conf").write_text("\n".join(lines) + "\n")
+    (DEST / "nginx-aliases.conf").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     print(f"wrote {DEST / 'latest.json'} for {manifest['tag']} ({len(manifest['files'])} files)")
 
 
