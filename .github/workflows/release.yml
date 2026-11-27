@@ -8,10 +8,10 @@ name: ViberVN Bot release
 # The source stays private: it is checked out with a read-only deploy key and
 # never committed here. Build logs of this repo are public; secrets stay masked.
 #
-# Run: push the same tag vX.Y.Z to this repo (git push <remote> vX.Y.Z; it may
-# point at any commit here), or Actions -> ViberVN Bot release -> Run workflow
-# with tag = vX.Y.Z. The tag must already be pushed to the source repo and equal
-# its pyproject.toml version.
+# Run: Actions -> ViberVN Bot release -> Run workflow with tag = vX.Y.Z. A pushed
+# tag builds the Rust app instead (release-rust.yml), which replaced this one.
+# The tag must already be pushed to the source repo and equal its pyproject.toml
+# version.
 # A failed leg does not hold back the others: publish attaches what was built,
 # and re-running the failed leg adds its files to the same release.
 #
@@ -21,8 +21,6 @@ name: ViberVN Bot release
 #   WINDOWS_SIGN_PFX_PASSWORD  its password
 
 on:
-  push:
-    tags: ['v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
     inputs:
       tag:

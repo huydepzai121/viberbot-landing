@@ -1,0 +1,273 @@
+name: ViberVN Bot release (Rust)
+
+# Builds the Rust desktop app (branch vibervnbot_rust of the PRIVATE source repo: shell/ GPUI app + Node
+# Backend) and publishes it as a release of THIS public repo, under the same asset names as the Electron
+# release.yml, so the download page and its feed (scripts/publish-release-feed.py) pick it up unchanged.
+#
+# Run: tag the source commit vX.Y.Z in the source repo, then push the same tag here (git push <remote> vX.Y.Z),
+# or Actions -> ViberVN Bot release (Rust) -> Run workflow with tag = vX.Y.Z.
+# A failed build leg does not hold back the others; the release waits for the tests.
+#
+# Signing:
+#   Windows  the MSIX with the self-signed PFX (secrets WINDOWS_SIGN_PFX, WINDOWS_SIGN_PFX_PASSWORD; subject
+#            "CN=ViberVN, O=ViberVN"), and the release carries its public .cer.
+#   macOS    ad-hoc (no Developer ID): packaging/macos/build.sh. Apple secrets, when added, sign and notarise.
+#   Linux    the AppImage is unsigned; the release lists every file's sha256 in SHA256SUMS.
+#
+# Secrets: SOURCE_DEPLOY_KEY (read-only deploy key of SOURCE_REPO), WINDOWS_SIGN_PFX, WINDOWS_SIGN_PFX_PASSWORD.
+# Optional: variable VIBERBOT_UPDATE_PUBKEY (built into the Shell to verify self-updates).
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag in the source repo (vX.Y.Z)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
+  SOURCE_REPO: nthuy2810/vibervn-bot
+  VIBERBOT_UPDATE_PUBKEY: ${{ vars.VIBERBOT_UPDATE_PUBKEY }}
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: refs/tags/${{ env.TAG }}
+          ssh-key: ${{ secrets.SOURCE_DEPLOY_KEY }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with: { node-version: 22.18, cache: npm }
+      - run: npm ci
+      - run: node --test packaging/test/*.test.ts
+      - uses: dtolnay/rust-toolchain@df2a88e9fe4098bad09cb42c3dec7187f15861fc
+        with: { toolchain: 1.100.0 }
+      # The updater's install detection and the Linux swap tests are Unix-only.
+      - run: cargo test -p viberbot-updater -p viberbot-model
+        working-directory: shell
+
+  build:
+    name: ${{ matrix.label }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { label: win-x64, runner: windows-2025 }
+          - { label: mac-arm64, runner: macos-15, arch: arm64 }
+          - { label: mac-x64, runner: macos-15-intel, arch: x64 }
+          - { label: linux-x86_64, runner: ubuntu-24.04, arch: x86_64 }
+          - { label: linux-arm64, runner: ubuntu-24.04-arm, arch: aarch64 }
+    steps:
+      - name: Validate the tag
+        shell: bash
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::tag '$TAG' is not vX.Y.Z"; exit 1; }
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+
+      - name: Check out the private source
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: refs/tags/${{ env.TAG }}
+          ssh-key: ${{ secrets.SOURCE_DEPLOY_KEY }}
+          # Leave no key in .git/config for the build scripts to see.
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with: { node-version: 22.18, cache: npm }
+      - run: npm ci
+      - uses: dtolnay/rust-toolchain@df2a88e9fe4098bad09cb42c3dec7187f15861fc
+        with: { toolchain: 1.100.0 }
+
+      - name: GUI build dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: >
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends
+          libxcb1-dev libxkbcommon-x11-dev libx11-xcb-dev libxkbcommon-dev libwayland-dev
+          libvulkan-dev libfontconfig-dev libfreetype-dev libssl-dev pkg-config clang cmake
+
+      - name: Build the Shell
+        run: cargo build --release -p viberbot-gui
+        working-directory: shell
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Get-Command makensis -ErrorAction SilentlyContinue)) {
+            choco install nsis -y --no-progress
+            if ($LASTEXITCODE) { throw 'could not install NSIS' }
+            "${env:ProgramFiles(x86)}\NSIS" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+            $env:PATH = "${env:ProgramFiles(x86)}\NSIS;$env:PATH"
+          }
+          # build.ps1 stages bin\, lib\ and VERSION (and writes the NSIS setup.exe the MSIX does not need).
+          pwsh packaging/windows/build.ps1 -Version $env:VERSION -Out dist
+          if ($LASTEXITCODE) { throw "build.ps1 failed (exit $LASTEXITCODE)" }
+          pwsh packaging/windows/msix.ps1 -Version $env:VERSION -Stage dist\stage -Out dist
+          if ($LASTEXITCODE) { throw "msix.ps1 failed (exit $LASTEXITCODE)" }
+
+      - name: Sign the MSIX
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          WINDOWS_SIGN_PFX: ${{ secrets.WINDOWS_SIGN_PFX }}
+          WINDOWS_SIGN_PFX_PASSWORD: ${{ secrets.WINDOWS_SIGN_PFX_PASSWORD }}
+        run: |
+          if (-not $env:WINDOWS_SIGN_PFX) { throw 'WINDOWS_SIGN_PFX secret is not set' }
+          $pfx = Join-Path $env:RUNNER_TEMP 'sign.pfx'
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:WINDOWS_SIGN_PFX))
+          $out = Join-Path $env:RUNNER_TEMP 'out'
+          New-Item -ItemType Directory -Force $out | Out-Null
+          $msix = Join-Path $out "VibervnbotBundled-$env:VERSION-win-x64.msix"
+          Move-Item "dist\vibervnbot-rust-$env:VERSION-windows-x64.msix" $msix
+          $signtool = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe' |
+            Sort-Object FullName -Descending | Select-Object -First 1
+          & $signtool.FullName sign /fd SHA256 /f $pfx /p $env:WINDOWS_SIGN_PFX_PASSWORD `
+            /tr http://timestamp.digicert.com /td SHA256 $msix
+          if ($LASTEXITCODE) { throw "signtool failed (exit $LASTEXITCODE)" }
+          $cert = [Security.Cryptography.X509Certificates.X509Certificate2]::new($pfx, $env:WINDOWS_SIGN_PFX_PASSWORD)
+          # The MSIX Publisher must be the certificate's subject, or Windows refuses the package.
+          if ($cert.Subject -ne 'CN=ViberVN, O=ViberVN') { throw "certificate subject is '$($cert.Subject)', not the MSIX Publisher" }
+          [IO.File]::WriteAllBytes((Join-Path $out 'ViberVN-signing.cer'), $cert.Export('Cert'))
+          Remove-Item $pfx
+          if ((Get-AuthenticodeSignature $msix).SignerCertificate.Thumbprint -ne $cert.Thumbprint) { throw 'the MSIX is not signed with the release certificate' }
+
+      - name: Package (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        env:
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: |
+          # Spotlight indexes the dmg staging image past hdiutil's detach retries.
+          sudo mdutil -a -i off || true
+          mkdir -p dist
+          sh packaging/macos/build.sh "$VERSION" "${{ matrix.arch }}" dist
+          codesign --verify --deep --strict --verbose=2 "dist/ViberVN Bot Lite.app"
+          out="$RUNNER_TEMP/out"; mkdir -p "$out"
+          mv "dist/viberbot-lite-$VERSION-macos-${{ matrix.arch }}.dmg" "$out/VibervnbotBundled-$VERSION-mac-${{ matrix.arch }}.dmg"
+          ditto -c -k --keepParent "dist/ViberVN Bot Lite.app" "$out/VibervnbotBundled-$VERSION-mac-${{ matrix.arch }}.zip"
+
+      - name: Package (Linux AppImage)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "${{ matrix.arch }}" in
+            x86_64)  sha=ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0 ;;
+            aarch64) sha=f0837e7448a0c1e4e650a93bb3e85802546e60654ef287576f46c71c126a9158 ;;
+          esac
+          tool="$RUNNER_TEMP/appimagetool"
+          curl -fsSL -o "$tool" "https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-${{ matrix.arch }}.AppImage"
+          echo "$sha  $tool" | sha256sum -c -
+          chmod +x "$tool"
+
+          # The layout the Shell looks for next to itself (shell/updater/src/layout.rs).
+          dir="$RUNNER_TEMP/AppDir"
+          mkdir -p "$dir/bin" "$dir/lib/runtime"
+          cp shell/target/release/viberbot-gui "$dir/bin/viberbot-lite"
+          cp "$(command -v node)" "$dir/lib/runtime/node"
+          chmod 755 "$dir/bin/viberbot-lite" "$dir/lib/runtime/node"
+          node packaging/build-backend.ts --out="$dir/lib/backend"
+          echo "$VERSION" > "$dir/VERSION"
+          printf '#!/bin/sh\nexec "$(dirname "$(readlink -f "$0")")/bin/viberbot-lite" "$@"\n' > "$dir/AppRun"
+          chmod 755 "$dir/AppRun"
+          cp apps/desktop/assets/appx/Square44x44Logo.targetsize-256.png "$dir/vibervnbot.png"
+          printf '[Desktop Entry]\nType=Application\nName=ViberVN Bot\nExec=viberbot-lite\nIcon=vibervnbot\nCategories=Utility;\nTerminal=false\n' > "$dir/vibervnbot.desktop"
+
+          out="$RUNNER_TEMP/out"; mkdir -p "$out"
+          name="VibervnbotBundled-$VERSION-linux-${{ matrix.arch == 'aarch64' && 'arm64' || 'x86_64' }}.AppImage"
+          ARCH=${{ matrix.arch }} "$tool" --appimage-extract-and-run "$dir" "$out/$name"
+
+      - name: Check the sizes
+        shell: bash
+        run: |
+          ls -la "$RUNNER_TEMP/out"
+          # GitHub rejects release assets of 2 GiB or more.
+          for f in "$RUNNER_TEMP"/out/*; do
+            [ "$(wc -c < "$f")" -lt 2147483648 ] || { echo "::error::$(basename "$f") is over 2 GiB"; exit 1; }
+          done
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-${{ matrix.label }}
+          path: ${{ runner.temp }}/out/*
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+
+  publish:
+    name: GitHub Release
+    needs: [test, build]
+    if: ${{ !cancelled() && needs.test.result == 'success' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Fetch the source tag
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: refs/tags/${{ env.TAG }}
+          ssh-key: ${{ secrets.SOURCE_DEPLOY_KEY }}
+          path: source
+          sparse-checkout: README.md
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: out
+
+      - name: Publish
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          shopt -s nullglob
+          assets=(out/*)
+          if [ ${#assets[@]} -eq 0 ]; then echo "::error::no leg produced an installer"; exit 1; fi
+          (cd out && sha256sum * > SHA256SUMS)
+          assets=(out/*)
+          ls -la out
+          # The annotated tag's message in the source repo is the changelog.
+          if [ "$(git -C source cat-file -t "refs/tags/$TAG" 2>/dev/null)" = tag ]; then
+            git -C source for-each-ref "refs/tags/$TAG" --format='%(contents)' > notes.md
+            printf '\n## Install\n\n' >> notes.md
+          fi
+          cat >> notes.md <<EOF
+          ViberVN Bot ${TAG} (Rust). The installers are not signed by a trusted publisher; each OS shows a warning you accept once. \`SHA256SUMS\` lists every file's checksum.
+
+          **Windows 11 22H2+ (x64)**: download \`ViberVN-signing.cer\` and the \`.msix\`. Trust the certificate once, in PowerShell **as Administrator**:
+          \`Import-Certificate -FilePath .\ViberVN-signing.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople\`
+          then open the \`.msix\` and choose Install.
+
+          **macOS 13+**: \`arm64\` is Apple Silicon, \`x64\` is Intel. Open the \`.dmg\` and drag the app to Applications. macOS blocks it the first time: open System Settings → Privacy & Security → Open Anyway, or run
+          \`xattr -dr com.apple.quarantine "/Applications/ViberVN Bot Lite.app"\`.
+
+          **Linux**: \`chmod +x\` the \`.AppImage\` for your architecture and run it.
+          EOF
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" "${assets[@]}" --clobber
+            gh release edit "$TAG" --notes-file notes.md
+          else
+            gh release create "$TAG" "${assets[@]}" --title "ViberVN Bot $TAG" --notes-file notes.md --latest
+          fi
