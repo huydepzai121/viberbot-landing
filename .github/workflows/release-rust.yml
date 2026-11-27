@@ -100,6 +100,8 @@ jobs:
           sudo apt-get update && sudo apt-get install -y --no-install-recommends
           libxcb1-dev libxkbcommon-x11-dev libx11-xcb-dev libxkbcommon-dev libwayland-dev
           libvulkan-dev libfontconfig-dev libfreetype-dev libssl-dev pkg-config clang cmake
+          libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev libjavascriptcoregtk-4.1-dev
+        # wry (the embedded webview) links GTK 3 and WebKitGTK 4.1 on Linux.
 
       - name: Build the Shell
         run: cargo build --release -p viberbot-gui
