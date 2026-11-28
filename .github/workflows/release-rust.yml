@@ -82,8 +82,15 @@ jobs:
           echo "9687f3bb551b9f66f37ed32a40d7913a00f7962db653054e56857bc306c3227f  $tgz" | sha256sum -c -
           tar -xzf "$tgz" -C "$RUNNER_TEMP"
           echo "$RUNNER_TEMP/wasm-bindgen-$v-x86_64-unknown-linux-musl" >> "$GITHUB_PATH"
-          sudo rm -f /etc/apt/sources.list.d/microsoft-prod*
-          sudo apt-get update && sudo apt-get install -y --no-install-recommends binaryen
+          # Not Ubuntu's binaryen (108, 2022): its wasm-opt turns wasm-bindgen's externref table into a funcref
+          # table, and the page then dies in __wbindgen_init_externref_table ("WebAssembly.Table.set(): Argument 1
+          # is invalid for table").
+          b=version_133
+          tgz="$RUNNER_TEMP/binaryen.tar.gz"
+          curl -fsSL -o "$tgz" "https://github.com/WebAssembly/binaryen/releases/download/$b/binaryen-$b-x86_64-linux.tar.gz"
+          echo "2dc9c7813f5375db93d96ead4b78222fcc3e2677bbb832297af4797782a37489  $tgz" | sha256sum -c -
+          tar -xzf "$tgz" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/binaryen-$b/bin" >> "$GITHUB_PATH"
       - run: bash shell/web/build.sh
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
